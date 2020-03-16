@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Join VIPorter</h1>
+    <form>
+      <fieldset>
+        <legend>Personal Information</legend>
+        <label for="first-name">First name</label>
+        <input type="text" id="first-name" data-bind="value: firstName" />
+
+        <label for="middle-name">Middle name (if shown on ID)</label>
+        <input type="text" id="middle-name" data-bind="value: middleName" />
+
+        <label for="last-name">Last name</label>
+        <input type="text" id="last-name" data-bind="value: lastName" />
+
+        <label for="gender">Gender</label>
+        <select
+          name="gender"
+          id="gender"
+          data-bind="options: genderOptions, value: $data, optionText: $data"
+        >
+        </select>
+
+        <fieldset>
+          <legend>Date of birth</legend>
+
+          <label for="dob-year" class="visually-hidden">Year</label>
+          <select
+            name="dob-year"
+            id="dob-year"
+            data-bind="options: $root.dobYearOptions, value: $data, optionText: $data"
+          ></select>
+          <!-- why did I have to user $root here and not above for genderOptions??? -->
+
+          <label for="dob-month" class="visually-hidden">Month</label>
+          <select
+            name="dob-month"
+            id="dob-month"
+            data-bind="options: $root.dobMonthOptions, value: $data, optionText: $data"
+          ></select>
+
+          <label for="dob-day" class="visually-hidden">Day</label>
+          <select
+            name="dob-day"
+            id="dob-day"
+            data-bind="options: $root.dobDayOptions, value: $data, optionText: $data"
+          ></select>
+        </fieldset>
+
+        <label for="street-address-1">Street address</label>
+        <input type="text" id="street-address-1" data-bind="streetAddress1" />
+
+        <label for="street-address-2">Street address line 2 (optional)</label>
+        <input type="text" id="street-address-2" data-bind="streetAddress2" />
+
+        <label for="country">Country</label>
+        <select
+          name="country"
+          id="country"
+          data-bind="options: $root.countryOptions, value: $data, optionText: $data, event: {change: $root.handleCountryChange}"
+        ></select>
+
+        <label for="prov-state">Province or state</label>
+        <select
+          name="prov-state"
+          id="prov-state"
+          data-bind="options: $root.provStateOptions, value: $data, optionText: $data"
+        ></select>
+      </fieldset>
+
+      <button data-bind="click: $root.addNewUser">Join now</button>
+    </form>
+
+    <div>first Name: <span data-bind="text: $root.firstName"></span></div>
+    <!-- why does this also need $root???? -->
+
+    <div>
+      <h2>All Users</h2>
+      <ul data-bind="visible: $root.users().length > 0,foreach: $root.users">
+        <!-- why does this also need $root???? -->
+        <li>
+          <p data-bind="text: name"></p>
+        </li>
+      </ul>
+    </div>
+
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>
