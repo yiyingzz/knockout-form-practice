@@ -174,3 +174,52 @@ input::-moz-focus-inner {
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "Roboto", sans-serif;
+}
+
+form label {
+  font-size: 1.4rem;
+}
+
+form input {
+  border: 2px solid #ddd;
+  border-radius: 2px;
+  padding: 10px;
+}
+
+.form-section {
+  width: calc((100% - 40px) / 3);
+  margin-right: 20px;
+  float: left;
+}
+
+.form-section label,
+.form-section input,
+.form-section .error-message {
+  width: 100%;
+}
+
+.form-section:last-of-type {
+  margin-right: 0;
+}
+
+/* FORM ERROR STYLES */
+.input-error {
+  border: 2px solid crimson;
+}
+
+.error-message {
+  font-size: 1.2rem;
+  color: crimson;
+  background: #eee;
+  border: 1px solid crimson;
+  padding: 5px;
+  display: none;
+}

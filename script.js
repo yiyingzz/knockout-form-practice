@@ -17,7 +17,7 @@ function User(name, gender, dob, address, contactInfo, login) {
 function SignUpViewModel() {
   console.log("it's all hooked up!");
 
-  // uneditable data
+  // uneditable data (b/c this is so long, might make sense to have them in separate file that you could import??)
   this.genderOptions = ["Female", "Male", "X"];
   this.dobYearOptions = [
     1980,
@@ -128,12 +128,27 @@ function SignUpViewModel() {
 
   // operations (methods)
 
+  this.checkInputs = () => {
+    // basically most inputs are required
+    // since I set the initial value to "", I need to check for ""
+    console.log("input check ran!");
+
+    if (this.email() === "") {
+      // show error message
+      document.querySelector("#email").classList.add("input-error");
+      document.querySelector("#email").nextElementSibling.style.display =
+        "block";
+    } else {
+      this.addNewUser();
+    }
+  };
+
   // add new user to system once "Join now" button is pressed
   this.addNewUser = param => {
     console.log("form submitted!!👍");
     console.log(param); // what is this? dom node?
 
-    // set user info
+    // set user info (probably should have just made a user object with all these to begin with)
     const name = {
       firstName: this.firstName(),
       middleName: this.middleName(),
@@ -178,6 +193,40 @@ function SignUpViewModel() {
     );
     this.users.push(newUser);
     console.log(this.users());
+
+    this.resetInputs();
+  };
+
+  this.resetInputs = function() {
+    // login
+    this.email("");
+    this.password1("");
+    this.password2("");
+
+    // name
+    this.firstName("");
+    this.middleName("");
+    this.lastName("");
+
+    // gender & dob
+    this.gender("");
+    this.dobYear("");
+    this.dobMonth("");
+    this.dobDay("");
+
+    // address
+    this.isCanadaOrUS(true);
+    this.streetAddress1("");
+    this.streetAddress2("");
+    this.country("");
+    this.provState("");
+    this.townCity("");
+    this.postalZipCode("");
+
+    // contact
+    this.phoneType("");
+    this.phoneNumber("");
+    this.preferredLang("");
   };
 
   this.setUserCountry = function(country) {
@@ -212,10 +261,18 @@ function SignUpViewModel() {
       this.phoneType(value);
     } else if (e.target.id === "preferred-lang") {
       this.preferredLang(value);
-      console.log(this.preferredLang());
     }
   };
 }
 
 // activate knockout
 ko.applyBindings(new SignUpViewModel());
+
+// Qs:
+//  why did I have to user $root on certian things & not others in html? eg. genderOptions vs dobYearOptions?
+
+// - error handling - how to check each input if it's been filled out or not
+// prob too much to put an error check on each input so will have to have one (per type of input?)
+// - in addition, how to set custom css for inputs when there's an error?
+// prob just use regular DOM manipulation
+// reset inputs upon submit
