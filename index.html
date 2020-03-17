@@ -11,151 +11,181 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Join VIPorter</h1>
-    <form data-bind="submit: checkInputs">
-      <fieldset>
-        <legend>Login information</legend>
+    <div class="wrapper">
+      <h1>Join VIPorter✈</h1>
+      <form data-bind="submit: checkInputs">
+        <fieldset>
+          <legend>Login information</legend>
 
-        <div class="form-section">
-          <label for="email">Email address</label>
-          <input type="email" id="email" data-bind="value: email" />
-          <div class="error-message">This field is required</div>
-        </div>
+          <div class="form-section">
+            <label for="email">Email address</label>
+            <input
+              type="email"
+              id="email"
+              data-bind="value: email, class: errors.email"
+            />
+            <div
+              class="error-message"
+              data-bind="text: errors.email, visible: errors.email"
+            ></div>
+          </div>
 
-        <div class="form-section">
-          <label for="password1">Password</label>
-          <input type="password" id="password1" data-bind="value: password1" />
-          <div class="error-message">This field is required</div>
-        </div>
+          <div class="form-section">
+            <label for="password1">Password</label>
+            <input
+              type="password"
+              id="password1"
+              data-bind="value: password1"
+            />
+            <div
+              class="error-message"
+              data-bind="text: errors.password1, visible: errors.password1"
+            ></div>
+          </div>
 
-        <div class="form-section">
-          <label for="password2">Re-enter password</label>
-          <input type="password" id="password2" data-bind="value: password2" />
-          <div class="error-message">This field is required</div>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Personal information</legend>
-        <label for="first-name">First name</label>
-        <input type="text" id="first-name" data-bind="value: firstName" />
-
-        <label for="middle-name">Middle name (if shown on ID)</label>
-        <input type="text" id="middle-name" data-bind="value: middleName" />
-
-        <label for="last-name">Last name</label>
-        <input type="text" id="last-name" data-bind="value: lastName" />
-
-        <label for="gender">Gender</label>
-        <select
-          name="gender"
-          id="gender"
-          data-bind="options: genderOptions, value: $data, optionText: $data, optionsCaption: 'Please Select'"
-        >
-        </select>
+          <div class="form-section">
+            <label for="password2">Re-enter password</label>
+            <input
+              type="password"
+              id="password2"
+              data-bind="value: password2"
+            />
+            <div
+              class="error-message"
+              data-bind="text: errors.password2, visible: errors.password2"
+            ></div>
+          </div>
+        </fieldset>
 
         <fieldset>
-          <legend>Date of birth</legend>
+          <legend>Personal information</legend>
+          <label for="first-name">First name</label>
+          <input type="text" id="first-name" data-bind="value: firstName" />
+          <div
+            class="error-message"
+            data-bind="text: errors.firstName, visible: errors.firstName"
+          ></div>
 
-          <label for="dob-year" class="visually-hidden">Year</label>
+          <label for="middle-name">Middle name (if shown on ID)</label>
+          <input type="text" id="middle-name" data-bind="value: middleName" />
+
+          <label for="last-name">Last name</label>
+          <input type="text" id="last-name" data-bind="value: lastName" />
+
+          <label for="gender">Gender</label>
           <select
-            name="dob-year"
-            id="dob-year"
-            data-bind="options: $root.dobYearOptions, value: $data, optionText: $data, optionsCaption: 'Year',, event: {change: $root.handleDobYearChange}"
+            name="gender"
+            id="gender"
+            data-bind="options: genderOptions, value: $data, optionText: $data, optionsCaption: 'Please Select'"
+          >
+          </select>
+
+          <fieldset>
+            <legend>Date of birth</legend>
+
+            <label for="dob-year" class="visually-hidden">Year</label>
+            <select
+              name="dob-year"
+              id="dob-year"
+              data-bind="options: $root.dobYearOptions, value: $data, optionText: $data, optionsCaption: 'Year',, event: {change: $root.handleDobYearChange}"
+            ></select>
+            <!-- why did I have to user $root here and not above for genderOptions??? -->
+
+            <label for="dob-month" class="visually-hidden">Month</label>
+            <select
+              name="dob-month"
+              id="dob-month"
+              data-bind="options: $root.dobMonthOptions, value: $data, optionText: $data, optionsCaption: 'Month', event: {change: $root.handleDobMonthChange}"
+            ></select>
+
+            <label for="dob-day" class="visually-hidden">Day</label>
+            <select
+              name="dob-day"
+              id="dob-day"
+              data-bind="options: $root.dobDayOptions, value: $data, optionText: $data, optionsCaption: 'Day', event: {change: $root.handleDobDayChange}"
+            ></select>
+          </fieldset>
+
+          <label for="street-address-1">Street address</label>
+          <input
+            type="text"
+            id="street-address-1"
+            data-bind="value: $root.streetAddress1"
+          />
+
+          <label for="street-address-2">Street address line 2 (optional)</label>
+          <input
+            type="text"
+            id="street-address-2"
+            data-bind="value: $root.streetAddress2"
+          />
+
+          <label for="country">Country</label>
+          <select
+            name="country"
+            id="country"
+            data-bind="options: $root.countryOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
           ></select>
-          <!-- why did I have to user $root here and not above for genderOptions??? -->
 
-          <label for="dob-month" class="visually-hidden">Month</label>
+          <div
+            class="prov-state-section"
+            data-bind="visible: $root.isCanadaOrUS"
+          >
+            <label for="prov-state">Province or state</label>
+            <select
+              name="prov-state"
+              id="prov-state"
+              data-bind="options: $root.provStateOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
+            ></select>
+          </div>
+
+          <label for="town-city">Town or city</label>
+          <input type="text" id="town-city" data-bind="value: $root.townCity" />
+
+          <label for="postal-zip-code">Postal/zip code</label>
+          <input
+            type="text"
+            id="postal-zip-code"
+            data-bind="value: $root.postalZipCode"
+          />
+
+          <label for="phone-type">Phone type</label>
           <select
-            name="dob-month"
-            id="dob-month"
-            data-bind="options: $root.dobMonthOptions, value: $data, optionText: $data, optionsCaption: 'Month', event: {change: $root.handleDobMonthChange}"
+            name="phone-type"
+            id="phone-type"
+            data-bind="options: $root.phoneTypeOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
           ></select>
 
-          <label for="dob-day" class="visually-hidden">Day</label>
+          <label for="phone-number">Phone number</label>
+          <input
+            type="text"
+            id="phone-number"
+            data-bind="value: $root.phoneNumber"
+          />
+
+          <label for="preferred-lang">Preferred language</label>
           <select
-            name="dob-day"
-            id="dob-day"
-            data-bind="options: $root.dobDayOptions, value: $data, optionText: $data, optionsCaption: 'Day', event: {change: $root.handleDobDayChange}"
+            name="preferred-lang"
+            id="preferred-lang"
+            data-bind="options: $root.preferredLangOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
           ></select>
         </fieldset>
 
-        <label for="street-address-1">Street address</label>
-        <input
-          type="text"
-          id="street-address-1"
-          data-bind="value: $root.streetAddress1"
-        />
+        <button type="submit">Join now</button>
+      </form>
 
-        <label for="street-address-2">Street address line 2 (optional)</label>
-        <input
-          type="text"
-          id="street-address-2"
-          data-bind="value: $root.streetAddress2"
-        />
+      <div>first Name: <span data-bind="text: $root.firstName"></span></div>
+      <!-- why does this also need $root???? -->
 
-        <label for="country">Country</label>
-        <select
-          name="country"
-          id="country"
-          data-bind="options: $root.countryOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
-        ></select>
-
-        <div class="prov-state-section" data-bind="visible: $root.isCanadaOrUS">
-          <label for="prov-state">Province or state</label>
-          <select
-            name="prov-state"
-            id="prov-state"
-            data-bind="options: $root.provStateOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
-          ></select>
-        </div>
-
-        <label for="town-city">Town or city</label>
-        <input type="text" id="town-city" data-bind="value: $root.townCity" />
-
-        <label for="postal-zip-code">Postal/zip code</label>
-        <input
-          type="text"
-          id="postal-zip-code"
-          data-bind="value: $root.postalZipCode"
-        />
-
-        <label for="phone-type">Phone type</label>
-        <select
-          name="phone-type"
-          id="phone-type"
-          data-bind="options: $root.phoneTypeOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
-        ></select>
-
-        <label for="phone-number">Phone number</label>
-        <input
-          type="text"
-          id="phone-number"
-          data-bind="value: $root.phoneNumber"
-        />
-
-        <label for="preferred-lang">Preferred language</label>
-        <select
-          name="preferred-lang"
-          id="preferred-lang"
-          data-bind="options: $root.preferredLangOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
-        ></select>
-      </fieldset>
-
-      <button type="submit">Join now</button>
-    </form>
-
-    <div>first Name: <span data-bind="text: $root.firstName"></span></div>
-    <!-- why does this also need $root???? -->
-
-    <div>
-      <h2>All Users</h2>
-      <ul data-bind="visible: $root.users().length > 0,foreach: $root.users">
-        <!-- why does this also need $root???? -->
-        <li>
-          <p data-bind="text: name.firstName + ' ' + name.lastName"></p>
-        </li>
-      </ul>
+      <div>
+        <h2>All Users</h2>
+        <ul data-bind="visible: $root.users().length > 0,foreach: $root.users">
+          <!-- why does this also need $root???? -->
+          <li>
+            <p data-bind="text: name.firstName + ' ' + name.lastName"></p>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <script

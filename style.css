@@ -182,13 +182,25 @@ html {
 body {
   font-size: 1.6rem;
   font-family: "Roboto", sans-serif;
+  background: #ddd;
 }
 
-form label {
+.wrapper {
+  width: 80%;
+  max-width: 1270px;
+  margin: 0 auto;
+}
+
+fieldset {
+  background: #fff;
+  margin: 30px 0;
+}
+
+label {
   font-size: 1.4rem;
 }
 
-form input {
+input {
   border: 2px solid #ddd;
   border-radius: 2px;
   padding: 10px;
@@ -221,5 +233,4 @@ form input {
   background: #eee;
   border: 1px solid crimson;
   padding: 5px;
-  display: none;
 }

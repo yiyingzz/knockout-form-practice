@@ -122,25 +122,82 @@ function SignUpViewModel() {
   this.phoneType = ko.observable("");
   this.phoneNumber = ko.observable("");
   this.preferredLang = ko.observable("");
+  this.firstName = ko.observable("");
 
   // editable data (user list)
   this.users = ko.observableArray([]);
 
+  this.errors = {
+    // what if I just make 1 property for each, use truthy/falsy to show error message, the value of the property will be the error message itself
+    email: ko.observable(""),
+    password1: ko.observable(""),
+    password2: ko.observable(""),
+    firstName: ko.observable("")
+  };
+
   // operations (methods)
 
-  this.checkInputs = () => {
-    // basically most inputs are required
-    // since I set the initial value to "", I need to check for ""
+  this.showErrorMessage = function(id, message = "This field is required.") {
+    this.errors[id](message);
+  };
+
+  this.checkInputs = form => {
     console.log("input check ran!");
 
-    if (this.email() === "") {
-      // show error message
-      document.querySelector("#email").classList.add("input-error");
-      document.querySelector("#email").nextElementSibling.style.display =
-        "block";
-    } else {
-      this.addNewUser();
+    console.log(form);
+    // this is the nodelist???
+
+    console.log(form.length);
+    console.log(typeof form);
+
+    // loop through list to grab all input & select nodes
+    let newForm = [];
+    for (let i = 0; i < form.length; i++) {
+      if (
+        (form[i].tagName === "INPUT" && form[i].id !== "middle-name") ||
+        (form[i].tagName === "SELECT" && form[i].id !== "prov-state")
+      ) {
+        console.log(form[i]);
+        newForm.push(form[i]);
+      }
     }
+
+    console.log("loggin new form");
+    console.log(newForm);
+
+    // then below, loop through the inputs, feed input IDs into this[inputId]() === "" to check for valid text
+    // showErrorMessage same for all of them
+    newForm.forEach(item => {
+      console.log(item);
+      console.log(item.id);
+
+      // here I need to reformat IDs but not for adding the class "input-error" but maybe shouldn't be doing that with vanilla JS
+      const id = item.id.replace(/-([a-z])/gi, function($1, $2) {
+        console.log($1, $2);
+        return $2.toUpperCase();
+      });
+      console.log(id);
+
+      // v problem here with hyphenated IDs :(
+      if (this[id]() === "") {
+        // v dunno if I should be manipulating dom this way👀
+        document.querySelector(`#${item.id}`).classList.add("input-error");
+
+        this.showErrorMessage(id);
+      }
+    });
+
+    // separate check for specific input errors like password match
+    // regex for email & pass?
+
+    // check for password match
+    if (this.password1() !== this.password2()) {
+      document.querySelector("#password2").classList.add("input-error");
+      this.showErrorMessage("password2", "Your password doesn't match!");
+    }
+
+    // no errors
+    // this.addNewUser();
   };
 
   // add new user to system once "Join now" button is pressed
@@ -273,6 +330,3 @@ ko.applyBindings(new SignUpViewModel());
 
 // - error handling - how to check each input if it's been filled out or not
 // prob too much to put an error check on each input so will have to have one (per type of input?)
-// - in addition, how to set custom css for inputs when there's an error?
-// prob just use regular DOM manipulation
-// reset inputs upon submit
