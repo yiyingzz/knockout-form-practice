@@ -4,12 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <h1>Join VIPorter</h1>
-    <form>
+    <form data-bind="submit: addNewUser">
       <fieldset>
-        <legend>Personal Information</legend>
+        <legend>Login information</legend>
+        <label for="email">Email address</label>
+        <input type="email" id="email" data-bind="value: email" />
+        <label for="password1">Password</label>
+        <input type="password" id="password1" data-bind="value: password1" />
+        <label for="password2">Re-enter password</label>
+        <input type="password" id="password2" data-bind="value: password2" />
+      </fieldset>
+
+      <fieldset>
+        <legend>Personal information</legend>
         <label for="first-name">First name</label>
         <input type="text" id="first-name" data-bind="value: firstName" />
 
@@ -23,7 +34,7 @@
         <select
           name="gender"
           id="gender"
-          data-bind="options: genderOptions, value: $data, optionText: $data"
+          data-bind="options: genderOptions, value: $data, optionText: $data, optionsCaption: 'Please Select'"
         >
         </select>
 
@@ -34,7 +45,7 @@
           <select
             name="dob-year"
             id="dob-year"
-            data-bind="options: $root.dobYearOptions, value: $data, optionText: $data"
+            data-bind="options: $root.dobYearOptions, value: $data, optionText: $data, optionsCaption: 'Year',, event: {change: $root.handleDobYearChange}"
           ></select>
           <!-- why did I have to user $root here and not above for genderOptions??? -->
 
@@ -42,39 +53,80 @@
           <select
             name="dob-month"
             id="dob-month"
-            data-bind="options: $root.dobMonthOptions, value: $data, optionText: $data"
+            data-bind="options: $root.dobMonthOptions, value: $data, optionText: $data, optionsCaption: 'Month', event: {change: $root.handleDobMonthChange}"
           ></select>
 
           <label for="dob-day" class="visually-hidden">Day</label>
           <select
             name="dob-day"
             id="dob-day"
-            data-bind="options: $root.dobDayOptions, value: $data, optionText: $data"
+            data-bind="options: $root.dobDayOptions, value: $data, optionText: $data, optionsCaption: 'Day', event: {change: $root.handleDobDayChange}"
           ></select>
         </fieldset>
 
         <label for="street-address-1">Street address</label>
-        <input type="text" id="street-address-1" data-bind="streetAddress1" />
+        <input
+          type="text"
+          id="street-address-1"
+          data-bind="value: $root.streetAddress1"
+        />
 
         <label for="street-address-2">Street address line 2 (optional)</label>
-        <input type="text" id="street-address-2" data-bind="streetAddress2" />
+        <input
+          type="text"
+          id="street-address-2"
+          data-bind="value: $root.streetAddress2"
+        />
 
         <label for="country">Country</label>
         <select
           name="country"
           id="country"
-          data-bind="options: $root.countryOptions, value: $data, optionText: $data, event: {change: $root.handleCountryChange}"
+          data-bind="options: $root.countryOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
         ></select>
 
-        <label for="prov-state">Province or state</label>
+        <div class="prov-state-section" data-bind="visible: $root.isCanadaOrUS">
+          <label for="prov-state">Province or state</label>
+          <select
+            name="prov-state"
+            id="prov-state"
+            data-bind="options: $root.provStateOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
+          ></select>
+        </div>
+
+        <label for="town-city">Town or city</label>
+        <input type="text" id="town-city" data-bind="value: $root.townCity" />
+
+        <label for="postal-zip-code">Postal/zip code</label>
+        <input
+          type="text"
+          id="postal-zip-code"
+          data-bind="value: $root.postalZipCode"
+        />
+
+        <label for="phone-type">Phone type</label>
         <select
-          name="prov-state"
-          id="prov-state"
-          data-bind="options: $root.provStateOptions, value: $data, optionText: $data"
+          name="phone-type"
+          id="phone-type"
+          data-bind="options: $root.phoneTypeOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
+        ></select>
+
+        <label for="phone-number">Phone number</label>
+        <input
+          type="text"
+          id="phone-number"
+          data-bind="value: $root.phoneNumber"
+        />
+
+        <label for="preferred-lang">Preferred language</label>
+        <select
+          name="preferred-lang"
+          id="preferred-lang"
+          data-bind="options: $root.preferredLangOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
         ></select>
       </fieldset>
 
-      <button data-bind="click: $root.addNewUser">Join now</button>
+      <button type="submit">Join now</button>
     </form>
 
     <div>first Name: <span data-bind="text: $root.firstName"></span></div>
@@ -85,7 +137,7 @@
       <ul data-bind="visible: $root.users().length > 0,foreach: $root.users">
         <!-- why does this also need $root???? -->
         <li>
-          <p data-bind="text: name"></p>
+          <p data-bind="text: fullName"></p>
         </li>
       </ul>
     </div>
