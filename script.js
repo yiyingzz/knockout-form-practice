@@ -132,7 +132,18 @@ function SignUpViewModel() {
     email: ko.observable(""),
     password1: ko.observable(""),
     password2: ko.observable(""),
-    firstName: ko.observable("")
+    firstName: ko.observable(""),
+    lastName: ko.observable(""),
+    gender: ko.observable(""),
+    dob: ko.observable(""),
+    streetAddress1: ko.observable(""),
+    country: ko.observable(""),
+    provState: ko.observable(""),
+    townCity: ko.observable(""),
+    postalZipCode: ko.observable(""),
+    phoneType: ko.observable(""),
+    phoneNumber: ko.observable(""),
+    preferredLang: ko.observable("")
   };
 
   // operations (methods)
@@ -154,7 +165,9 @@ function SignUpViewModel() {
     let newForm = [];
     for (let i = 0; i < form.length; i++) {
       if (
-        (form[i].tagName === "INPUT" && form[i].id !== "middle-name") ||
+        (form[i].tagName === "INPUT" &&
+          form[i].id !== "middle-name" &&
+          form[i].id !== "street-address-2") ||
         (form[i].tagName === "SELECT" && form[i].id !== "prov-state")
       ) {
         console.log(form[i]);
@@ -172,17 +185,22 @@ function SignUpViewModel() {
       console.log(item.id);
 
       // here I need to reformat IDs but not for adding the class "input-error" but maybe shouldn't be doing that with vanilla JS
-      const id = item.id.replace(/-([a-z])/gi, function($1, $2) {
+      let id = item.id.replace(/-(\w)/gi, function($1, $2) {
         console.log($1, $2);
         return $2.toUpperCase();
       });
       console.log(id);
 
+      console.log(id);
       // v problem here with hyphenated IDs :(
       if (this[id]() === "") {
+        console.log(this[id]());
+        if (id.match(/(dob)/g)) {
+          id = "dob";
+        }
+
         // v dunno if I should be manipulating dom this way👀
         document.querySelector(`#${item.id}`).classList.add("input-error");
-
         this.showErrorMessage(id);
       }
     });
@@ -308,12 +326,12 @@ function SignUpViewModel() {
       this.setUserCountry(value);
     } else if (e.target.id === "prov-state") {
       this.provState(value);
-    } else if (e.target.id === "dob-year") {
-      this.dobYear(value);
-    } else if (e.target.id === "dob-month") {
-      this.dobMonth(value);
-    } else if (e.target.id === "dob-day") {
-      this.dobDay(value);
+    } else if (
+      e.target.id === "dob-year" ||
+      e.target.id === "dob-month" ||
+      e.target.id === "dob-day"
+    ) {
+      this.dob(value);
     } else if (e.target.id === "phone-type") {
       this.phoneType(value);
     } else if (e.target.id === "preferred-lang") {
