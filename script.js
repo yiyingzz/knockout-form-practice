@@ -127,21 +127,24 @@ function SignUpViewModel() {
 
   this.errors = {
     // what if I just make 1 property for each, use truthy/falsy to show error message, the value of the property will be the error message itself
-    email: ko.observable(""),
-    password1: ko.observable(""),
-    password2: ko.observable(""),
-    firstName: ko.observable(""),
-    lastName: ko.observable(""),
-    gender: ko.observable(""),
-    dob: ko.observable(""),
-    streetAddress1: ko.observable(""),
-    country: ko.observable(""),
-    provState: ko.observable(""),
-    townCity: ko.observable(""),
-    postalZipCode: ko.observable(""),
-    phoneType: ko.observable(""),
-    phoneNumber: ko.observable(""),
-    preferredLang: ko.observable("")
+    email: ko.observable(),
+    password1: ko.observable(),
+    password2: ko.observable(),
+    firstName: ko.observable(),
+    lastName: ko.observable(),
+    gender: ko.observable(),
+    dobYear: ko.observable(),
+    dobMonth: ko.observable(),
+    dobDay: ko.observable(),
+    dob: ko.observable(),
+    streetAddress1: ko.observable(),
+    country: ko.observable(),
+    provState: ko.observable(),
+    townCity: ko.observable(),
+    postalZipCode: ko.observable(),
+    phoneType: ko.observable(),
+    phoneNumber: ko.observable(),
+    preferredLang: ko.observable()
   };
 
   // operations (methods)
@@ -168,7 +171,7 @@ function SignUpViewModel() {
     // then below, loop through the inputs, feed input IDs into this[inputId]() === "" to check for valid text
     // showErrorMessage same for all of them
     newForm.forEach(item => {
-      // here I need to reformat IDs but not for adding the class "input-error" but maybe shouldn't be doing that with vanilla JS
+      // converting css class names into camelCase for their JS counterparts
       let id = item.id.replace(/-(\w)/g, function($1, $2) {
         return $2.toUpperCase();
       });
@@ -177,11 +180,9 @@ function SignUpViewModel() {
       if (this[id]() === "") {
         // this is to create just 1 error for all 3 date of birth select elements
         if (id.match(/(dob)/g)) {
-          id = "dob";
+          this.showErrorMessage("dob");
         }
 
-        // v dunno if I should be manipulating dom this way👀
-        document.querySelector(`#${item.id}`).classList.add("input-error");
         this.showErrorMessage(id);
       }
     });
@@ -214,7 +215,6 @@ function SignUpViewModel() {
     ) {
       // how to check the value here? we need to grab the right input still
 
-      document.querySelector("#prov-state").classList.add("input-error");
       this.showErrorMessage("provState");
     }
   };
@@ -322,14 +322,31 @@ function SignUpViewModel() {
 
   // one function for all select elements!
   this.handleSelectChange = (value, e) => {
-    if (e.target.id === "country") {
-      // determine which country & if we need to show/hide the province/state options
-      this.setUserCountry(value);
+    console.log(value);
+    const id = e.target.id.replace(/-(\w)/g, function($1, $2) {
+      return $2.toUpperCase();
+    });
+    if (value !== undefined) {
+      if (id === "country") {
+        // determine which country & if we need to show/hide the province/state options
+        this.setUserCountry(value);
+      } else {
+        this[id](value);
+      }
+      this.errors[id]("");
     } else {
-      const id = e.target.id.replace(/-(\w)/g, function($1, $2) {
-        return $2.toUpperCase();
-      });
-      this[id](value);
+      this.showErrorMessage(id);
+    }
+
+    // need to clear error for general dob inputs
+    if (id.match(/(dob)/g)) {
+      if (
+        this.errors.dobYear() === "" &&
+        this.errors.dobMonth() === "" &&
+        this.errors.dobDay() === ""
+      ) {
+        this.errors.dob("");
+      }
     }
   };
 }
@@ -342,6 +359,3 @@ ko.applyBindings(new SignUpViewModel());
 
 // todo:
 // - clear error messages once you type into the input box!
-// - dob errors - once an individual field has been filled in, get rid of red border but keep error message for other errors
-// - ^ maybe this means once there's focus/content in inputs, no border?
-//

@@ -200,9 +200,10 @@ label {
   font-size: 1.4rem;
 }
 
-input {
+input,
+select {
   border: 2px solid #ddd;
-  border-radius: 2px;
+  border-radius: 3px;
   padding: 10px;
 }
 
@@ -221,6 +222,16 @@ input {
 
 .form-section:last-of-type {
   margin-right: 0;
+}
+
+/* DOB section */
+.dob-form-section .form-section {
+  width: calc(33%);
+  float: left;
+}
+
+.dob-form-section .error-message {
+  clear: both;
 }
 
 /* FORM ERROR STYLES */

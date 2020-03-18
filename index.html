@@ -22,7 +22,7 @@
             <input
               type="email"
               id="email"
-              data-bind="value: email, class: errors.email"
+              data-bind="value: email, css: {'input-error': errors.email}"
             />
             <div
               class="error-message"
@@ -35,7 +35,7 @@
             <input
               type="password"
               id="password1"
-              data-bind="value: password1"
+              data-bind="value: password1, css: {'input-error': errors.password1}"
             />
             <div
               class="error-message"
@@ -48,7 +48,7 @@
             <input
               type="password"
               id="password2"
-              data-bind="value: password2"
+              data-bind="value: password2, css: {'input-error': errors.password2}"
             />
             <div
               class="error-message"
@@ -62,7 +62,11 @@
 
           <div class="form-section">
             <label for="first-name">First name</label>
-            <input type="text" id="first-name" data-bind="value: firstName" />
+            <input
+              type="text"
+              id="first-name"
+              data-bind="value: firstName, css: {'input-error': errors.firstName}"
+            />
             <div
               class="error-message"
               data-bind="text: errors.firstName, visible: errors.firstName"
@@ -71,12 +75,20 @@
 
           <div class="form-section">
             <label for="middle-name">Middle name (if shown on ID)</label>
-            <input type="text" id="middle-name" data-bind="value: middleName" />
+            <input
+              type="text"
+              id="middle-name"
+              data-bind="value: middleName, css: {'input-error': errors.middleName}"
+            />
           </div>
 
           <div class="form-section">
             <label for="last-name">Last name</label>
-            <input type="text" id="last-name" data-bind="value: lastName" />
+            <input
+              type="text"
+              id="last-name"
+              data-bind="value: lastName, css: {'input-error': errors.lastName}"
+            />
             <div
               class="error-message"
               data-bind="text: errors.lastName, visible: errors.lastName"
@@ -88,7 +100,7 @@
             <select
               name="gender"
               id="gender"
-              data-bind="options: genderOptions, value: $data, optionText: $data, optionsCaption: 'Please Select'"
+              data-bind="options: genderOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: handleSelectChange}, css: {'input-error': errors.gender}"
             >
             </select>
             <div
@@ -106,7 +118,7 @@
               <select
                 name="dob-year"
                 id="dob-year"
-                data-bind="options: $root.dobYearOptions, value: $data, optionText: $data, optionsCaption: 'Year',, event: {change: $root.handleDobYearChange}"
+                data-bind="options: $root.dobYearOptions, value: $data, optionText: $data, optionsCaption: 'Year', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.dobYear}"
               ></select>
             </div>
 
@@ -115,7 +127,7 @@
               <select
                 name="dob-month"
                 id="dob-month"
-                data-bind="options: $root.dobMonthOptions, value: $data, optionText: $data, optionsCaption: 'Month', event: {change: $root.handleDobMonthChange}"
+                data-bind="options: $root.dobMonthOptions, value: $data, optionText: $data, optionsCaption: 'Month', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.dobMonth}"
               ></select>
             </div>
 
@@ -124,7 +136,7 @@
               <select
                 name="dob-day"
                 id="dob-day"
-                data-bind="options: $root.dobDayOptions, value: $data, optionText: $data, optionsCaption: 'Day', event: {change: $root.handleDobDayChange}"
+                data-bind="options: $root.dobDayOptions, value: $data, optionText: $data, optionsCaption: 'Day', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.dobDay}"
               ></select>
             </div>
             <div
@@ -138,7 +150,7 @@
             <input
               type="text"
               id="street-address-1"
-              data-bind="value: $root.streetAddress1"
+              data-bind="value: $root.streetAddress1, css: {'input-error': $root.errors.streetAddress1}"
             />
             <div
               class="error-message"
@@ -153,7 +165,7 @@
             <input
               type="text"
               id="street-address-2"
-              data-bind="value: $root.streetAddress2"
+              data-bind="value: $root.streetAddress2, css: {'input-error': $root.errors.streetAddress2}"
             />
           </div>
 
@@ -162,7 +174,7 @@
             <select
               name="country"
               id="country"
-              data-bind="options: $root.countryOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
+              data-bind="options: $root.countryOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.country}"
             ></select>
             <div
               class="error-message"
@@ -178,7 +190,7 @@
             <select
               name="prov-state"
               id="prov-state"
-              data-bind="options: $root.provStateOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
+              data-bind="options: $root.provStateOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.provState}"
             ></select>
             <div
               class="error-message"
@@ -191,7 +203,7 @@
             <input
               type="text"
               id="town-city"
-              data-bind="value: $root.townCity"
+              data-bind="value: $root.townCity, css: {'input-error': $root.errors.townCity}"
             />
             <div
               class="error-message"
@@ -204,7 +216,7 @@
             <input
               type="text"
               id="postal-zip-code"
-              data-bind="value: $root.postalZipCode"
+              data-bind="value: $root.postalZipCode, css: {'input-error': $root.errors.postalZipCode}"
             />
             <div
               class="error-message"
@@ -217,7 +229,7 @@
             <select
               name="phone-type"
               id="phone-type"
-              data-bind="options: $root.phoneTypeOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
+              data-bind="options: $root.phoneTypeOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.phoneType}"
             ></select>
             <div
               class="error-message"
@@ -230,7 +242,7 @@
             <input
               type="text"
               id="phone-number"
-              data-bind="value: $root.phoneNumber"
+              data-bind="value: $root.phoneNumber, css: {'input-error': $root.errors.phoneNumber}"
             />
             <div
               class="error-message"
@@ -243,7 +255,7 @@
             <select
               name="preferred-lang"
               id="preferred-lang"
-              data-bind="options: $root.preferredLangOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}"
+              data-bind="options: $root.preferredLangOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.preferredLang}"
             ></select>
             <div
               class="error-message"
