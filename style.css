@@ -214,6 +214,7 @@ input {
 
 .form-section label,
 .form-section input,
+.form-section select,
 .form-section .error-message {
   width: 100%;
 }

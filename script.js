@@ -15,8 +15,6 @@ function User(name, gender, dob, address, contactInfo, login) {
 // viewmodel - so this is the page essentially
 // so inputs should be bound here??
 function SignUpViewModel() {
-  console.log("it's all hooked up!");
-
   // uneditable data (b/c this is so long, might make sense to have them in separate file that you could import??)
   this.genderOptions = ["Female", "Male", "X"];
   this.dobYearOptions = [
@@ -153,14 +151,6 @@ function SignUpViewModel() {
   };
 
   this.checkInputs = form => {
-    console.log("input check ran!");
-
-    console.log(form);
-    // this is the nodelist???
-
-    console.log(form.length);
-    console.log(typeof form);
-
     // loop through list to grab all input & select nodes
     let newForm = [];
     for (let i = 0; i < form.length; i++) {
@@ -170,31 +160,22 @@ function SignUpViewModel() {
           form[i].id !== "street-address-2") ||
         (form[i].tagName === "SELECT" && form[i].id !== "prov-state")
       ) {
-        console.log(form[i]);
         newForm.push(form[i]);
       }
     }
-
-    console.log("loggin new form");
-    console.log(newForm);
+    // end of for loop
 
     // then below, loop through the inputs, feed input IDs into this[inputId]() === "" to check for valid text
     // showErrorMessage same for all of them
     newForm.forEach(item => {
-      console.log(item);
-      console.log(item.id);
-
       // here I need to reformat IDs but not for adding the class "input-error" but maybe shouldn't be doing that with vanilla JS
-      let id = item.id.replace(/-(\w)/gi, function($1, $2) {
-        console.log($1, $2);
+      let id = item.id.replace(/-(\w)/g, function($1, $2) {
         return $2.toUpperCase();
       });
-      console.log(id);
 
-      console.log(id);
-      // v problem here with hyphenated IDs :(
+      // check if the input is empty
       if (this[id]() === "") {
-        console.log(this[id]());
+        // this is to create just 1 error for all 3 date of birth select elements
         if (id.match(/(dob)/g)) {
           id = "dob";
         }
@@ -204,18 +185,38 @@ function SignUpViewModel() {
         this.showErrorMessage(id);
       }
     });
+    // end of newForm.forEach
 
-    // separate check for specific input errors like password match
-    // regex for email & pass?
+    // more specific error checks for specific input errors like password match
+    this.checkPasswordMatch();
+    this.checkProvState();
 
-    // check for password match
+    // check for no errors
+    // if no errors at all:
+    // this.addNewUser();
+  };
+  // end of checkInput function
+
+  this.checkPasswordMatch = () => {
     if (this.password1() !== this.password2()) {
       document.querySelector("#password2").classList.add("input-error");
       this.showErrorMessage("password2", "Your password doesn't match!");
     }
+  };
 
-    // no errors
-    // this.addNewUser();
+  this.checkProvState = () => {
+    // check for province/state - if it's not us/canada, dont give it an error
+    // first need to determine if its US/Canada, then we do this check
+    if (
+      this.provState() === "Canada" ||
+      this.provState() === "USA" ||
+      this.provState() === ""
+    ) {
+      // how to check the value here? we need to grab the right input still
+
+      document.querySelector("#prov-state").classList.add("input-error");
+      this.showErrorMessage("provState");
+    }
   };
 
   // add new user to system once "Join now" button is pressed
@@ -305,7 +306,6 @@ function SignUpViewModel() {
   };
 
   this.setUserCountry = function(country) {
-    console.log(country);
     if (country !== "Canada" && country !== "USA") {
       this.isCanadaOrUS(false); // to hide prov/state options
     } else {
@@ -323,19 +323,13 @@ function SignUpViewModel() {
   // one function for all select elements!
   this.handleSelectChange = (value, e) => {
     if (e.target.id === "country") {
+      // determine which country & if we need to show/hide the province/state options
       this.setUserCountry(value);
-    } else if (e.target.id === "prov-state") {
-      this.provState(value);
-    } else if (
-      e.target.id === "dob-year" ||
-      e.target.id === "dob-month" ||
-      e.target.id === "dob-day"
-    ) {
-      this.dob(value);
-    } else if (e.target.id === "phone-type") {
-      this.phoneType(value);
-    } else if (e.target.id === "preferred-lang") {
-      this.preferredLang(value);
+    } else {
+      const id = e.target.id.replace(/-(\w)/g, function($1, $2) {
+        return $2.toUpperCase();
+      });
+      this[id](value);
     }
   };
 }
@@ -346,5 +340,8 @@ ko.applyBindings(new SignUpViewModel());
 // Qs:
 //  why did I have to user $root on certian things & not others in html? eg. genderOptions vs dobYearOptions?
 
-// - error handling - how to check each input if it's been filled out or not
-// prob too much to put an error check on each input so will have to have one (per type of input?)
+// todo:
+// - clear error messages once you type into the input box!
+// - dob errors - once an individual field has been filled in, get rid of red border but keep error message for other errors
+// - ^ maybe this means once there's focus/content in inputs, no border?
+//
