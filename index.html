@@ -13,7 +13,7 @@
   <body>
     <div class="wrapper">
       <h1>Join VIPorter✈</h1>
-      <form data-bind="submit: checkInputs">
+      <form data-bind="submit: submitForm" novalidate>
         <fieldset>
           <legend>Login information</legend>
 
@@ -22,7 +22,7 @@
             <input
               type="email"
               id="email"
-              data-bind="value: email, css: {'input-error': errors.email}"
+              data-bind="value: email, css: {'input-error': errors.email}, event: {change: handleInputChange}"
             />
             <div
               class="error-message"
@@ -35,7 +35,7 @@
             <input
               type="password"
               id="password1"
-              data-bind="value: password1, css: {'input-error': errors.password1}"
+              data-bind="value: password1, css: {'input-error': errors.password1}, event: {change: handleInputChange}"
             />
             <div
               class="error-message"
@@ -48,7 +48,7 @@
             <input
               type="password"
               id="password2"
-              data-bind="value: password2, css: {'input-error': errors.password2}"
+              data-bind="value: password2, css: {'input-error': errors.password2}, event: {change: handleInputChange}"
             />
             <div
               class="error-message"
@@ -65,7 +65,7 @@
             <input
               type="text"
               id="first-name"
-              data-bind="value: firstName, css: {'input-error': errors.firstName}"
+              data-bind="value: firstName, css: {'input-error': errors.firstName}, event: {change: handleInputChange}"
             />
             <div
               class="error-message"
@@ -87,7 +87,7 @@
             <input
               type="text"
               id="last-name"
-              data-bind="value: lastName, css: {'input-error': errors.lastName}"
+              data-bind="value: lastName, css: {'input-error': errors.lastName}, event: {change: handleInputChange}"
             />
             <div
               class="error-message"
@@ -150,7 +150,7 @@
             <input
               type="text"
               id="street-address-1"
-              data-bind="value: $root.streetAddress1, css: {'input-error': $root.errors.streetAddress1}"
+              data-bind="value: $root.streetAddress1, css: {'input-error': $root.errors.streetAddress1}, event: {change: $root.handleInputChange}"
             />
             <div
               class="error-message"
@@ -203,7 +203,7 @@
             <input
               type="text"
               id="town-city"
-              data-bind="value: $root.townCity, css: {'input-error': $root.errors.townCity}"
+              data-bind="value: $root.townCity, css: {'input-error': $root.errors.townCity}, event: {change: $root.handleInputChange}"
             />
             <div
               class="error-message"
@@ -216,7 +216,7 @@
             <input
               type="text"
               id="postal-zip-code"
-              data-bind="value: $root.postalZipCode, css: {'input-error': $root.errors.postalZipCode}"
+              data-bind="value: $root.postalZipCode, css: {'input-error': $root.errors.postalZipCode}, event: {change: $root.handleInputChange}"
             />
             <div
               class="error-message"
@@ -242,7 +242,7 @@
             <input
               type="text"
               id="phone-number"
-              data-bind="value: $root.phoneNumber, css: {'input-error': $root.errors.phoneNumber}"
+              data-bind="value: $root.phoneNumber, css: {'input-error': $root.errors.phoneNumber}, event: {change: $root.handleInputChange}"
             />
             <div
               class="error-message"

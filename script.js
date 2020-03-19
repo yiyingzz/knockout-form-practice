@@ -127,6 +127,7 @@ function SignUpViewModel() {
 
   this.errors = {
     // what if I just make 1 property for each, use truthy/falsy to show error message, the value of the property will be the error message itself
+    hasErrors: ko.observable(false),
     email: ko.observable(),
     password1: ko.observable(),
     password2: ko.observable(),
@@ -153,6 +154,12 @@ function SignUpViewModel() {
     this.errors[id](message);
   };
 
+  this.submitForm = e => {
+    // check for blank inputs
+    this.checkInputs(e);
+  };
+
+  // This just checks for blank inputs, then calls the more specific error checking functions
   this.checkInputs = form => {
     // loop through list to grab all input & select nodes
     let newForm = [];
@@ -172,9 +179,7 @@ function SignUpViewModel() {
     // showErrorMessage same for all of them
     newForm.forEach(item => {
       // converting css class names into camelCase for their JS counterparts
-      let id = item.id.replace(/-(\w)/g, function($1, $2) {
-        return $2.toUpperCase();
-      });
+      let id = this.getInputId(item.id);
 
       // check if the input is empty
       if (this[id]() === "") {
@@ -189,19 +194,37 @@ function SignUpViewModel() {
     // end of newForm.forEach
 
     // more specific error checks for specific input errors like password match
+    this.checkEmailValid();
     this.checkPasswordMatch();
     this.checkProvState();
+    this.scrollToError();
 
-    // check for no errors
+    // check for no errors - how?
     // if no errors at all:
     // this.addNewUser();
   };
-  // end of checkInput function
+  // end of checkInputs function
+
+  this.checkEmailValid = () => {
+    // email regex from W3C
+    const emailCheck = RegExp(
+      /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+    );
+    if (!emailCheck.test(this.email())) {
+      this.showErrorMessage("email", "Please enter a valid email address.");
+
+      // this scrolls to the error, but can't put this on every error
+      // just need to go to the first error in the form
+      // need a separate function for it???
+      document.querySelector("label[for='email'").scrollIntoView();
+    }
+  };
 
   this.checkPasswordMatch = () => {
     if (this.password1() !== this.password2()) {
-      document.querySelector("#password2").classList.add("input-error");
       this.showErrorMessage("password2", "Your password doesn't match!");
+    } else {
+      this.showErrorMessage("password2", ""); // clear error message
     }
   };
 
@@ -213,8 +236,6 @@ function SignUpViewModel() {
       this.provState() === "USA" ||
       this.provState() === ""
     ) {
-      // how to check the value here? we need to grab the right input still
-
       this.showErrorMessage("provState");
     }
   };
@@ -273,6 +294,7 @@ function SignUpViewModel() {
     this.resetInputs();
   };
 
+  // clear form once data has been submitted successfully
   this.resetInputs = function() {
     // login
     this.email("");
@@ -311,7 +333,7 @@ function SignUpViewModel() {
     } else {
       this.isCanadaOrUS(true);
       if (this.provStateOptions().length > 0) {
-        this.provStateOptions.splice(0); // removes previous
+        this.provStateOptions.splice(0); // removes previous options in dropdown
       }
       this.provStateData[country.toLowerCase()].forEach(item => {
         this.provStateOptions.push(item);
@@ -323,9 +345,8 @@ function SignUpViewModel() {
   // one function for all select elements!
   this.handleSelectChange = (value, e) => {
     console.log(value);
-    const id = e.target.id.replace(/-(\w)/g, function($1, $2) {
-      return $2.toUpperCase();
-    });
+    const id = this.getInputId(e.target.id);
+
     if (value !== undefined) {
       if (id === "country") {
         // determine which country & if we need to show/hide the province/state options
@@ -334,11 +355,15 @@ function SignUpViewModel() {
         this[id](value);
       }
       this.errors[id]("");
+    } else if (value === undefined && id.match(/(dob)/g)) {
+      this.showErrorMessage(id);
+      this.showErrorMessage("dob");
     } else {
+      // if there isn't a value
       this.showErrorMessage(id);
     }
 
-    // need to clear error for general dob inputs
+    // need to clear error for general dob inputs (dunno if this needs to be a separate function???)
     if (id.match(/(dob)/g)) {
       if (
         this.errors.dobYear() === "" &&
@@ -346,6 +371,40 @@ function SignUpViewModel() {
         this.errors.dobDay() === ""
       ) {
         this.errors.dob("");
+      }
+    }
+  };
+
+  this.handleInputChange = (param, e) => {
+    console.log(param); // what is this? comes out undefined, when used after a select, it's the select value!!!
+    const id = this.getInputId(e.target.id);
+    console.log(id);
+
+    if (this[id] !== "") {
+      this.errors[id]("");
+    }
+  };
+
+  this.getInputId = cssClass => {
+    const id = cssClass.replace(/-(\w)/g, function($1, $2) {
+      return $2.toUpperCase();
+    });
+    return id;
+  };
+
+  this.scrollToError = () => {
+    // set a variable to determine if form has errors
+    this.errors.hasErrors(true);
+    if (this.errors.hasErrors()) {
+      // if true:
+      // use querySelector to find first input with 'input-error' class,
+      const id = document.querySelector(".input-error").id;
+      // use the input id in label[for="id"]
+      // scroll to the label
+      if (id.match(/(dob)/g)) {
+        document.querySelector(".dob-form-section").scrollIntoView();
+      } else {
+        document.querySelector(`label[for='${id}'`).scrollIntoView();
       }
     }
   };
@@ -358,4 +417,4 @@ ko.applyBindings(new SignUpViewModel());
 //  why did I have to user $root on certian things & not others in html? eg. genderOptions vs dobYearOptions?
 
 // todo:
-// - clear error messages once you type into the input box!
+// - figure out where to call this.addNewUser() to complete the form submission!

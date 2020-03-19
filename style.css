@@ -207,6 +207,10 @@ select {
   padding: 10px;
 }
 
+input:invalid {
+  box-shadow: none;
+}
+
 .form-section {
   width: calc((100% - 40px) / 3);
   margin-right: 20px;
