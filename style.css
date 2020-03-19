@@ -217,7 +217,6 @@ input:invalid {
   float: left;
 }
 
-.form-section label,
 .form-section input,
 .form-section select,
 .form-section .error-message {

@@ -212,11 +212,6 @@ function SignUpViewModel() {
     );
     if (!emailCheck.test(this.email())) {
       this.showErrorMessage("email", "Please enter a valid email address.");
-
-      // this scrolls to the error, but can't put this on every error
-      // just need to go to the first error in the form
-      // need a separate function for it???
-      document.querySelector("label[for='email'").scrollIntoView();
     }
   };
 
@@ -378,7 +373,6 @@ function SignUpViewModel() {
   this.handleInputChange = (param, e) => {
     console.log(param); // what is this? comes out undefined, when used after a select, it's the select value!!!
     const id = this.getInputId(e.target.id);
-    console.log(id);
 
     if (this[id] !== "") {
       this.errors[id]("");
@@ -399,12 +393,18 @@ function SignUpViewModel() {
       // if true:
       // use querySelector to find first input with 'input-error' class,
       const id = document.querySelector(".input-error").id;
+      console.log(id);
       // use the input id in label[for="id"]
       // scroll to the label
       if (id.match(/(dob)/g)) {
-        document.querySelector(".dob-form-section").scrollIntoView();
+        document
+          .querySelector(".dob-form-section")
+          .scrollIntoView({ behavior: "smooth" });
       } else {
-        document.querySelector(`label[for='${id}'`).scrollIntoView();
+        console.log(document.querySelector(`label[for='${id}']`));
+        document
+          .querySelector(`label[for='${id}']`)
+          .scrollIntoView({ behavior: "smooth" });
       }
     }
   };
