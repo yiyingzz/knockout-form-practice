@@ -1,0 +1,58 @@
+fieldset {
+  background: #fff;
+  margin: 30px 0;
+}
+
+label {
+  font-size: 1.4rem;
+}
+
+input,
+select {
+  border: 2px solid #ddd;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+input:invalid {
+  box-shadow: none;
+}
+
+.form-section {
+  width: calc((100% - 40px) / 3);
+  margin-right: 20px;
+  float: left;
+}
+
+.form-section input,
+.form-section select,
+.form-section .error-message {
+  width: 100%;
+}
+
+.form-section:last-of-type {
+  margin-right: 0;
+}
+
+/* DOB section */
+.dob-form-section .form-section {
+  width: calc(33%);
+  float: left;
+}
+
+.dob-form-section .error-message {
+  clear: both;
+}
+
+/* FORM ERROR STYLES */
+.input-error {
+  border: 2px solid crimson;
+}
+
+.error-message {
+  font-size: 1.2rem;
+  color: crimson;
+  background: #eee;
+  border: 1px solid crimson;
+  padding: 5px;
+}
