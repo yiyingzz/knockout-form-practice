@@ -48,11 +48,11 @@
             <input
               type="password"
               id="password2"
-              data-bind="value: password2, css: {'input-error': errors.password2}, event: {change: handleInputChange}"
+              data-bind="value: password2, css: {'input-error': $root.errors.password2}, event: {change: handleInputChange}"
             />
             <div
               class="error-message"
-              data-bind="text: errors.password2, visible: errors.password2"
+              data-bind="text: $root.errors.password2, visible: $root.errors.password2"
             ></div>
           </div>
         </fieldset>
@@ -285,6 +285,6 @@
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"
     ></script>
-    <script src="script.js"></script>
+    <script src="scripts/script.js"></script>
   </body>
 </html>

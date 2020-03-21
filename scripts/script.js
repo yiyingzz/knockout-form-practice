@@ -162,7 +162,7 @@ function SignUpViewModel() {
   // This just checks for blank inputs, then calls the more specific error checking functions
   this.checkInputs = form => {
     // loop through list to grab all input & select nodes
-    let newForm = [];
+    let inputs = [];
     for (let i = 0; i < form.length; i++) {
       if (
         (form[i].tagName === "INPUT" &&
@@ -170,14 +170,14 @@ function SignUpViewModel() {
           form[i].id !== "street-address-2") ||
         (form[i].tagName === "SELECT" && form[i].id !== "prov-state")
       ) {
-        newForm.push(form[i]);
+        inputs.push(form[i]);
       }
     }
     // end of for loop
 
     // then below, loop through the inputs, feed input IDs into this[inputId]() === "" to check for valid text
     // showErrorMessage same for all of them
-    newForm.forEach(item => {
+    inputs.forEach(item => {
       // converting css class names into camelCase for their JS counterparts
       let id = this.getInputId(item.id);
 
@@ -187,7 +187,6 @@ function SignUpViewModel() {
         if (id.match(/(dob)/g)) {
           this.showErrorMessage("dob");
         }
-
         this.showErrorMessage(id);
       }
     });
@@ -195,7 +194,11 @@ function SignUpViewModel() {
 
     // more specific error checks for specific input errors like password match
     this.checkEmailValid();
-    this.checkPasswordMatch();
+
+    if (this.password1() !== "") {
+      console.log("password check ran");
+      this.checkPasswordMatch();
+    }
     this.checkProvState();
     this.scrollToError();
 
@@ -218,8 +221,10 @@ function SignUpViewModel() {
   this.checkPasswordMatch = () => {
     if (this.password1() !== this.password2()) {
       this.showErrorMessage("password2", "Your password doesn't match!");
+      console.log("no match");
     } else {
       this.showErrorMessage("password2", ""); // clear error message
+      console.log("cleared p2");
     }
   };
 
@@ -339,7 +344,6 @@ function SignUpViewModel() {
 
   // one function for all select elements!
   this.handleSelectChange = (value, e) => {
-    console.log(value);
     const id = this.getInputId(e.target.id);
 
     if (value !== undefined) {
@@ -393,7 +397,6 @@ function SignUpViewModel() {
       // if true:
       // use querySelector to find first input with 'input-error' class,
       const id = document.querySelector(".input-error").id;
-      console.log(id);
       // use the input id in label[for="id"]
       // scroll to the label
       if (id.match(/(dob)/g)) {
@@ -401,7 +404,6 @@ function SignUpViewModel() {
           .querySelector(".dob-form-section")
           .scrollIntoView({ behavior: "smooth" });
       } else {
-        console.log(document.querySelector(`label[for='${id}']`));
         document
           .querySelector(`label[for='${id}']`)
           .scrollIntoView({ behavior: "smooth" });
