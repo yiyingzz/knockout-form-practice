@@ -1,0 +1,7 @@
+{
+  "less.compile": {
+    "main": "${workspaceRoot}\\styles\\style.less",
+    "out": "style.css",
+    "autoprefixer": "> .5%, last 2 versions"
+  }
+}

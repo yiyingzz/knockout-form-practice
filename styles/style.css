@@ -27,7 +27,8 @@ figure {
   margin: 1em 40px;
 }
 hr {
-  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
   height: 0;
   overflow: visible;
 }
@@ -42,7 +43,8 @@ a {
 abbr[title] {
   border-bottom: none;
   text-decoration: underline;
-  text-decoration: underline dotted;
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
 }
 b,
 strong {
@@ -136,7 +138,8 @@ fieldset {
   padding: 0.35em 0.75em 0.625em;
 }
 legend {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   color: inherit;
   display: table;
   max-width: 100%;
@@ -152,7 +155,8 @@ textarea {
 }
 [type="checkbox"],
 [type="radio"] {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   padding: 0;
 }
 [type="number"]::-webkit-inner-spin-button,
@@ -196,14 +200,14 @@ template {
   height: 0;
 }
 html {
-  -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
 }
 .visually-hidden:not(:focus):not(:active) {
   position: absolute;
@@ -213,7 +217,8 @@ html {
   border: 0;
   padding: 0;
   white-space: nowrap;
-  clip-path: inset(100%);
+  -webkit-clip-path: inset(100%);
+          clip-path: inset(100%);
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
@@ -234,10 +239,10 @@ body {
 }
 button {
   background: #e0af2d;
-  background: #ffffff;
   padding: 10px 20px;
   border: 0;
-  box-shadow: 1px 1px #744d0a;
+  -webkit-box-shadow: 1px 1px #744d0a;
+          box-shadow: 1px 1px #744d0a;
   cursor: pointer;
 }
 fieldset {
