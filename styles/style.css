@@ -235,7 +235,11 @@ body {
 .wrapper {
   width: 80%;
   max-width: 1270px;
-  margin: 0 auto;
+  margin: 30px auto 50px;
+}
+h1 {
+  text-align: center;
+  font-size: 2.4rem;
 }
 button {
   background: #e0af2d;
@@ -248,9 +252,16 @@ button {
 fieldset {
   background: #ffffff;
   margin: 30px 0;
+  border: 0;
 }
-label {
+fieldset legend {
+  font-size: 2.2rem;
+}
+label,
+.dob-form-section legend {
   font-size: 1.4rem;
+  display: inline-block;
+  padding-bottom: 3px;
 }
 input,
 select {
@@ -278,6 +289,13 @@ select {
 }
 .dob-form-section .error-message {
   clear: both;
+}
+/* TERMS AGREEMENT CHECKBOX */
+.terms-section {
+  width: 100%;
+}
+.terms-section input {
+  width: auto;
 }
 /* FORM ERROR STYLES */
 .input-error {

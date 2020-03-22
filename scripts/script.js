@@ -1,5 +1,4 @@
-// a Class for user object with user info (pre-ES6?)
-// we would need to pass in a LOT of info though!!!
+// a Class for user object
 function User(name, gender, dob, address, contactInfo, login) {
   const self = this;
   self.name = name;
@@ -10,12 +9,9 @@ function User(name, gender, dob, address, contactInfo, login) {
   self.login = login;
 }
 
-// rewriting in ES6 classes
-
 // viewmodel - so this is the page essentially
-// so inputs should be bound here??
 function SignUpViewModel() {
-  // uneditable data (b/c this is so long, might make sense to have them in separate file that you could import??)
+  // options for the select dropdowns
   this.genderOptions = ["Female", "Male", "X"];
   this.dobYearOptions = [
     1980,
@@ -91,7 +87,7 @@ function SignUpViewModel() {
   this.phoneTypeOptions = ["Home", "Business", "Mobile"];
   this.preferredLangOptions = ["English", "French"];
 
-  // input values (user info)
+  // INPUT VALUES (user info)
   // login
   this.email = ko.observable("");
   this.password1 = ko.observable("");
@@ -125,8 +121,8 @@ function SignUpViewModel() {
   // editable data (user list)
   this.users = ko.observableArray([]);
 
+  // ERROR OBJECT
   this.errors = {
-    // what if I just make 1 property for each, use truthy/falsy to show error message, the value of the property will be the error message itself
     hasErrors: ko.observable(false),
     email: ko.observable(),
     password1: ko.observable(),
@@ -148,8 +144,7 @@ function SignUpViewModel() {
     preferredLang: ko.observable()
   };
 
-  // operations (methods)
-
+  // METHODS
   this.showErrorMessage = function(id, message = "This field is required.") {
     this.errors[id](message);
   };

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Join VIPorter</title>
     <link
       href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
       rel="stylesheet"
@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="wrapper">
-      <h1>Join VIPorter✈</h1>
+      <h1>Join VIPorter</h1>
       <p>
         Registration is quick and free! Complete the form below to sign up and
         receive your VIPorter number instantly; then add it to your booking to
@@ -20,8 +20,14 @@
       </p>
 
       <form data-bind="submit: submitForm" novalidate>
-        <fieldset>
+        <fieldset class="login-info">
           <legend>Login information</legend>
+          <p>All fields are required unless otherwise noted.</p>
+          <p>
+            Password must be at least 8 characters, no more than 16 characters
+            and must include at least one upper case letter and one numeric
+            digit.
+          </p>
 
           <div class="form-section">
             <label for="email">Email address</label>
@@ -63,8 +69,12 @@
           </div>
         </fieldset>
 
-        <fieldset>
+        <fieldset class="personal-info">
           <legend>Personal information</legend>
+          <p>
+            Passenger's name, gender and date of birth must match their
+            passport.
+          </p>
 
           <div class="form-section">
             <label for="first-name">First name</label>
@@ -270,21 +280,28 @@
           </div>
         </fieldset>
 
+        <fieldset class="terms-agreement">
+          <legend class="visually-hidden">
+            Agreement of Terms and Conditions
+          </legend>
+          <div class="form-section terms-section">
+            <input
+              type="checkbox"
+              id="terms"
+              data-bind="value: $root.phoneNumber, css: {'input-error': $root.errors.phoneNumber}, event: {change: $root.handleInputChange}"
+            />
+            <label for="terms"
+              >I agree to the terms and conditions of VIPorter program</label
+            >
+            <div
+              class="error-message"
+              data-bind="text: $root.errors.phoneNumber, visible: $root.errors.phoneNumber"
+            ></div>
+          </div>
+        </fieldset>
+
         <button type="submit">Join now</button>
       </form>
-
-      <div>first Name: <span data-bind="text: $root.firstName"></span></div>
-      <!-- why does this also need $root???? -->
-
-      <div>
-        <h2>All Users</h2>
-        <ul data-bind="visible: $root.users().length > 0,foreach: $root.users">
-          <!-- why does this also need $root???? -->
-          <li>
-            <p data-bind="text: name.firstName + ' ' + name.lastName"></p>
-          </li>
-        </ul>
-      </div>
     </div>
 
     <script
