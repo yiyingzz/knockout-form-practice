@@ -1,5 +1,5 @@
 fieldset {
-  background: #fff;
+  background: @white;
   margin: 30px 0;
 }
 
@@ -9,13 +9,9 @@ label {
 
 input,
 select {
-  border: 2px solid #ddd;
+  border: 1px solid @medium-grey;
   border-radius: 3px;
   padding: 10px;
-}
-
-input:invalid {
-  box-shadow: none;
 }
 
 .form-section {
@@ -46,13 +42,13 @@ input:invalid {
 
 /* FORM ERROR STYLES */
 .input-error {
-  border: 2px solid crimson;
+  border: 2px solid @dark-red;
 }
 
 .error-message {
   font-size: 1.2rem;
-  color: crimson;
-  background: #eee;
-  border: 1px solid crimson;
+  color: @dark-red;
+  background: @pale-red;
+  border: 1px solid @dark-red;
   padding: 5px;
 }

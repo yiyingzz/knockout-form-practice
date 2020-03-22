@@ -193,13 +193,18 @@ function SignUpViewModel() {
     // end of newForm.forEach
 
     // more specific error checks for specific input errors like password match
-    this.checkEmailValid();
+    if (this.email() !== "") {
+      this.checkEmailValid();
+    }
 
     if (this.password1() !== "") {
       console.log("password check ran");
       this.checkPasswordMatch();
     }
-    this.checkProvState();
+
+    if (this.country() === "Canada" || this.country() === "USA") {
+      this.checkProvState();
+    }
     this.scrollToError();
 
     // check for no errors - how?
