@@ -20,63 +20,65 @@
       </p>
 
       <form data-bind="submit: submitForm" novalidate>
-        <fieldset class="login-info">
-          <legend>Login information</legend>
+        <div class="form-section login-section">
           <p>All fields are required unless otherwise noted.</p>
+          <h2>Login information</h2>
           <p>
             Password must be at least 8 characters, no more than 16 characters
             and must include at least one upper case letter and one numeric
             digit.
           </p>
 
-          <div class="form-section">
-            <label for="email">Email address</label>
-            <input
-              type="email"
-              id="email"
-              data-bind="value: email, css: {'input-error': errors.email}, event: {change: handleInputChange}"
-            />
-            <div
-              class="error-message"
-              data-bind="text: errors.email, visible: errors.email"
-            ></div>
-          </div>
+          <div class="login-controls">
+            <div class="form-control">
+              <label for="email">Email address</label>
+              <input
+                type="email"
+                id="email"
+                data-bind="value: email, css: {'input-error': errors.email}, event: {change: handleInputChange}"
+              />
+              <div
+                class="error-message"
+                data-bind="text: errors.email, visible: errors.email"
+              ></div>
+            </div>
 
-          <div class="form-section">
-            <label for="password1">Password</label>
-            <input
-              type="password"
-              id="password1"
-              data-bind="value: password1, css: {'input-error': errors.password1}, event: {change: handleInputChange}"
-            />
-            <div
-              class="error-message"
-              data-bind="text: errors.password1, visible: errors.password1"
-            ></div>
-          </div>
+            <div class="form-control">
+              <label for="password1">Password</label>
+              <input
+                type="password"
+                id="password1"
+                data-bind="value: password1, css: {'input-error': errors.password1}, event: {change: handleInputChange}"
+              />
+              <div
+                class="error-message"
+                data-bind="text: errors.password1, visible: errors.password1"
+              ></div>
+            </div>
 
-          <div class="form-section">
-            <label for="password2">Re-enter password</label>
-            <input
-              type="password"
-              id="password2"
-              data-bind="value: password2, css: {'input-error': $root.errors.password2}, event: {change: handleInputChange}"
-            />
-            <div
-              class="error-message"
-              data-bind="text: $root.errors.password2, visible: $root.errors.password2"
-            ></div>
+            <div class="form-control">
+              <label for="password2">Re-enter password</label>
+              <input
+                type="password"
+                id="password2"
+                data-bind="value: password2, css: {'input-error': $root.errors.password2}, event: {change: handleInputChange}"
+              />
+              <div
+                class="error-message"
+                data-bind="text: $root.errors.password2, visible: $root.errors.password2"
+              ></div>
+            </div>
           </div>
-        </fieldset>
+        </div>
 
-        <fieldset class="personal-info">
-          <legend>Personal information</legend>
+        <div class="form-section personal-section">
+          <h2>Personal information</h2>
           <p>
             Passenger's name, gender and date of birth must match their
             passport.
           </p>
 
-          <div class="form-section">
+          <div class="form-control">
             <label for="first-name">First name</label>
             <input
               type="text"
@@ -89,7 +91,7 @@
             ></div>
           </div>
 
-          <div class="form-section">
+          <div class="form-control">
             <label for="middle-name">Middle name (if shown on ID)</label>
             <input
               type="text"
@@ -98,7 +100,7 @@
             />
           </div>
 
-          <div class="form-section">
+          <div class="form-control">
             <label for="last-name">Last name</label>
             <input
               type="text"
@@ -111,7 +113,7 @@
             ></div>
           </div>
 
-          <div class="form-section">
+          <div class="form-control">
             <label for="gender">Gender</label>
             <select
               name="gender"
@@ -126,10 +128,10 @@
             <!-- why did I have to user $root here for accessing "errors" and not above for genderOptions??? has to do with new binding context for genderOptions?? -->
           </div>
 
-          <fieldset class="dob-form-section">
+          <fieldset class="form-control__dob">
             <legend>Date of birth</legend>
 
-            <div class="form-section">
+            <div class="form-control">
               <label for="dob-year" class="visually-hidden">Year</label>
               <select
                 name="dob-year"
@@ -138,7 +140,7 @@
               ></select>
             </div>
 
-            <div class="form-section">
+            <div class="form-control">
               <label for="dob-month" class="visually-hidden">Month</label>
               <select
                 name="dob-month"
@@ -147,7 +149,7 @@
               ></select>
             </div>
 
-            <div class="form-section">
+            <div class="form-control">
               <label for="dob-day" class="visually-hidden">Day</label>
               <select
                 name="dob-day"
@@ -161,7 +163,7 @@
             ></div>
           </fieldset>
 
-          <div class="form-section">
+          <div class="form-control">
             <label for="street-address-1">Street address</label>
             <input
               type="text"
@@ -174,7 +176,7 @@
             ></div>
           </div>
 
-          <div class="form-section">
+          <div class="form-control">
             <label for="street-address-2"
               >Street address line 2 (optional)</label
             >
@@ -185,7 +187,7 @@
             />
           </div>
 
-          <div class="form-section">
+          <div class="form-control">
             <label for="country">Country</label>
             <select
               name="country"
@@ -199,7 +201,7 @@
           </div>
 
           <div
-            class="form-section prov-state-section"
+            class="form-control prov-state-form-control"
             data-bind="visible: $root.isCanadaOrUS"
           >
             <label for="prov-state">Province or state</label>
@@ -214,7 +216,7 @@
             ></div>
           </div>
 
-          <div class="form-section">
+          <div class="form-control">
             <label for="town-city">Town or city</label>
             <input
               type="text"
@@ -227,7 +229,7 @@
             ></div>
           </div>
 
-          <div class="form-section">
+          <div class="form-control">
             <label for="postal-zip-code">Postal/zip code</label>
             <input
               type="text"
@@ -240,7 +242,7 @@
             ></div>
           </div>
 
-          <div class="form-section">
+          <div class="form-control">
             <label for="phone-type">Phone type</label>
             <select
               name="phone-type"
@@ -253,7 +255,7 @@
             ></div>
           </div>
 
-          <div class="form-section">
+          <div class="form-control">
             <label for="phone-number">Phone number</label>
             <input
               type="text"
@@ -266,41 +268,52 @@
             ></div>
           </div>
 
-          <div class="form-section">
+          <p class="phone-message">
+            Providing a mobile number indicates your consent to receive
+            automated flight delay and cancellation notifications from Porter
+            via SMS Service. Standard messaging and data rates may apply.
+          </p>
+
+          <div class="form-control">
             <label for="preferred-lang">Preferred language</label>
             <select
               name="preferred-lang"
               id="preferred-lang"
               data-bind="options: $root.preferredLangOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.preferredLang}"
             ></select>
+            <div class="tooltip">
+              ?
+            </div>
+            <div class="tooltip">
+              Let's speak in your language!
+            </div>
             <div
               class="error-message"
               data-bind="text: $root.errors.preferredLang, visible: $root.errors.preferredLang"
             ></div>
           </div>
-        </fieldset>
+        </div>
 
-        <fieldset class="terms-agreement">
-          <legend class="visually-hidden">
+        <div class="form-section terms-section">
+          <h2 class="visually-hidden">
             Agreement of Terms and Conditions
-          </legend>
-          <div class="form-section terms-section">
+          </h2>
+          <div class="form-control form-control__terms">
             <input
               type="checkbox"
               id="terms"
-              data-bind="value: $root.phoneNumber, css: {'input-error': $root.errors.phoneNumber}, event: {change: $root.handleInputChange}"
+              data-bind="checked: $root.terms, css: {'input-error': $root.errors.terms}, event: {change: $root.handleInputChange}"
             />
             <label for="terms"
               >I agree to the terms and conditions of VIPorter program</label
             >
             <div
               class="error-message"
-              data-bind="text: $root.errors.phoneNumber, visible: $root.errors.phoneNumber"
+              data-bind="text: $root.errors.terms, visible: $root.errors.terms"
             ></div>
           </div>
-        </fieldset>
-
-        <button type="submit">Join now</button>
+          <button type="submit">Join now</button>
+        </div>
       </form>
     </div>
 

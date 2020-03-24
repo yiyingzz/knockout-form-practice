@@ -1,18 +1,33 @@
-fieldset {
+.form-section {
   background: @white;
   margin: 30px 0;
-  border: 0;
+  padding: 20px;
+  border: 1px solid #ddd;
 
-  legend {
+  h2 {
     font-size: @large;
+    margin-top: 0;
+  }
+
+  p:first-of-type {
+    margin-top: 0;
   }
 }
 
+.login-section p:first-of-type {
+  text-align: right;
+}
+
+.login-controls {
+  display: flex;
+  justify-content: space-between;
+}
+
 label,
-.dob-form-section legend {
+.form-control__dob legend {
   font-size: 1.4rem;
   display: inline-block;
-  padding-bottom: 3px;
+  padding: 15px 0 3px;
 }
 
 input,
@@ -22,10 +37,8 @@ select {
   padding: 10px;
 }
 
-.form-section {
-  width: calc((100% - 40px) / 3);
-  margin-right: 20px;
-  float: left;
+.form-control {
+  width: calc(100% / 3 - 20px);
 
   input,
   select,
@@ -34,25 +47,38 @@ select {
   }
 }
 
-.form-section:last-of-type {
+.form-control:nth-of-type(3) {
   margin-right: 0;
 }
 
+.personal-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 /* DOB section */
-.dob-form-section {
-  .form-section {
-    width: calc(33%);
-    float: left;
+.form-control__dob {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: calc(66% - 5px);
+
+  .form-control {
+    width: calc(100% / 3 - 15px);
   }
 
   .error-message {
-    clear: both;
+    width: 100%;
   }
 }
 
 /* TERMS AGREEMENT CHECKBOX */
 
-.terms-section {
+.form-control__terms {
   width: 100%;
 
   input {

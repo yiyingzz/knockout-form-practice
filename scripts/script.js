@@ -118,6 +118,9 @@ function SignUpViewModel() {
   this.preferredLang = ko.observable("");
   this.firstName = ko.observable("");
 
+  // terms agreement
+  this.terms = ko.observable(false);
+
   // editable data (user list)
   this.users = ko.observableArray([]);
 
@@ -141,12 +144,14 @@ function SignUpViewModel() {
     postalZipCode: ko.observable(),
     phoneType: ko.observable(),
     phoneNumber: ko.observable(),
-    preferredLang: ko.observable()
+    preferredLang: ko.observable(),
+    terms: ko.observable()
   };
 
   // METHODS
   this.showErrorMessage = function(id, message = "This field is required.") {
     this.errors[id](message);
+    console.log(this.errors[id]());
   };
 
   this.submitForm = e => {
@@ -166,6 +171,7 @@ function SignUpViewModel() {
         (form[i].tagName === "SELECT" && form[i].id !== "prov-state")
       ) {
         inputs.push(form[i]);
+        console.log(form[i]);
       }
     }
     // end of for loop
@@ -176,8 +182,8 @@ function SignUpViewModel() {
       // converting css class names into camelCase for their JS counterparts
       let id = this.getInputId(item.id);
 
-      // check if the input is empty
-      if (this[id]() === "") {
+      // check if the input is empty or false
+      if (this[id]() === "" || this[id]() === false) {
         // this is to create just 1 error for all 3 date of birth select elements
         if (id.match(/(dob)/g)) {
           this.showErrorMessage("dob");
@@ -200,6 +206,7 @@ function SignUpViewModel() {
     if (this.country() === "Canada" || this.country() === "USA") {
       this.checkProvState();
     }
+
     this.scrollToError();
 
     // check for no errors - how?
@@ -378,6 +385,8 @@ function SignUpViewModel() {
     console.log(param); // what is this? comes out undefined, when used after a select, it's the select value!!!
     const id = this.getInputId(e.target.id);
 
+    console.log(this[id]());
+
     if (this[id] !== "") {
       this.errors[id]("");
     }
@@ -396,6 +405,7 @@ function SignUpViewModel() {
     if (this.errors.hasErrors()) {
       // if true:
       // use querySelector to find first input with 'input-error' class,
+      console.log(document.querySelector(".input-error"));
       const id = document.querySelector(".input-error").id;
       // use the input id in label[for="id"]
       // scroll to the label

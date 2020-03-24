@@ -249,19 +249,35 @@ button {
           box-shadow: 1px 1px #744d0a;
   cursor: pointer;
 }
-fieldset {
+.form-section {
   background: #ffffff;
   margin: 30px 0;
-  border: 0;
+  padding: 20px;
+  border: 1px solid #ddd;
 }
-fieldset legend {
+.form-section h2 {
   font-size: 2.2rem;
+  margin-top: 0;
+}
+.form-section p:first-of-type {
+  margin-top: 0;
+}
+.login-section p:first-of-type {
+  text-align: right;
+}
+.login-controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 label,
-.dob-form-section legend {
+.form-control__dob legend {
   font-size: 1.4rem;
   display: inline-block;
-  padding-bottom: 3px;
+  padding: 15px 0 3px;
 }
 input,
 select {
@@ -269,32 +285,53 @@ select {
   border-radius: 3px;
   padding: 10px;
 }
-.form-section {
-  width: calc((100% - 40px) / 3);
-  margin-right: 20px;
-  float: left;
+.form-control {
+  width: calc(100% / 3 - 20px);
 }
-.form-section input,
-.form-section select,
-.form-section .error-message {
+.form-control input,
+.form-control select,
+.form-control .error-message {
   width: 100%;
 }
-.form-section:last-of-type {
+.form-control:nth-of-type(3) {
   margin-right: 0;
 }
+.personal-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
 /* DOB section */
-.dob-form-section .form-section {
-  width: calc(33%);
-  float: left;
+.form-control__dob {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: calc(66% - 5px);
 }
-.dob-form-section .error-message {
-  clear: both;
+.form-control__dob .form-control {
+  width: calc(100% / 3 - 15px);
 }
-/* TERMS AGREEMENT CHECKBOX */
-.terms-section {
+.form-control__dob .error-message {
   width: 100%;
 }
-.terms-section input {
+/* TERMS AGREEMENT CHECKBOX */
+.form-control__terms {
+  width: 100%;
+}
+.form-control__terms input {
   width: auto;
 }
 /* FORM ERROR STYLES */
