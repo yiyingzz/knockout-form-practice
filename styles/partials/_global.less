@@ -23,8 +23,15 @@ h1 {
 
 button {
   background: @yellow;
-  padding: 10px 20px;
-  border: 0;
+  padding: 15px 25px;
+  margin-top: 20px;
+  border: 1px solid @yellow;
   box-shadow: 1px 1px #744d0a;
   cursor: pointer;
+
+  &:hover,
+  &:focus {
+    border: 1px solid @dark-blue;
+    box-shadow: none;
+  }
 }

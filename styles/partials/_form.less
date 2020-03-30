@@ -2,7 +2,7 @@
   background: @white;
   margin: 30px 0;
   padding: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid @medium-grey;
 
   h2 {
     font-size: @large;
@@ -32,9 +32,14 @@ label,
 
 input,
 select {
-  border: 1px solid @medium-grey;
+  border: 1px solid @dark-grey;
   border-radius: 3px;
   padding: 10px;
+
+  &:focus {
+    border: 1px solid @medium-grey;
+    box-shadow: 0 0 5px 3px @light-grey;
+  }
 }
 
 .form-control {
@@ -76,13 +81,77 @@ select {
   }
 }
 
+/* PREFERRED LANGUAGE */
+.form-control__lang {
+  width: auto;
+  display: grid;
+  // grid-template-rows: auto auto auto;
+  grid-template-columns: auto 35px;
+
+  label {
+    padding-top: 0;
+    grid-row: 1;
+    grid-column: 1 / span 2;
+  }
+
+  .error-message {
+    grid-row: 3;
+    grid-column: 1 / span 2;
+  }
+}
+
+select[id="preferred-lang"] {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.tooltip {
+  font-size: 3rem;
+  color: @dark-grey;
+  margin-left: 5px;
+  grid-row: 2;
+  grid-column: 2;
+  cursor: pointer;
+}
+
+.tooltip__content {
+  // display: none;
+  background: @light-blue;
+  border: 1px solid @medium-blue;
+  font-size: @small;
+  padding: 20px;
+  // position: absolute;
+  grid-row: 3;
+  grid-column: 1 / span 2;
+
+  .fa-stack {
+    font-size: 1rem;
+  }
+}
+
 /* TERMS AGREEMENT CHECKBOX */
 
 .form-control__terms {
   width: 100%;
 
+  div:first-of-type {
+    background: @light-blue;
+    border: 2px solid @light-blue;
+    border-radius: 3px;
+    padding: 10px;
+
+    &:hover,
+    &:focus {
+      border: 2px solid @medium-blue;
+    }
+  }
+
   input {
     width: auto;
+  }
+
+  label {
+    padding: 5px;
   }
 }
 

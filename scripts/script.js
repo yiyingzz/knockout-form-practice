@@ -430,3 +430,6 @@ ko.applyBindings(new SignUpViewModel());
 
 // todo:
 // - figure out where to call this.addNewUser() to complete the form submission!
+// - clicking on terms bluebox should trigger checkmark
+// - also triggers style changes
+// - preffered language grid??

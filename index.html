@@ -3,11 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Join VIPorter</title>
+    <title>Join VIPorter today!</title>
     <link
       href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/31c9dfb07b.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="styles/style.css" />
   </head>
   <body>
@@ -274,19 +278,29 @@
             via SMS Service. Standard messaging and data rates may apply.
           </p>
 
-          <div class="form-control">
+          <div class="form-control form-control__lang">
             <label for="preferred-lang">Preferred language</label>
+            <!-- <div class="preferred-lang__container"> -->
             <select
               name="preferred-lang"
               id="preferred-lang"
               data-bind="options: $root.preferredLangOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.preferredLang}"
             ></select>
             <div class="tooltip">
-              ?
+              <i class="far fa-question-circle" aria-hidden="true"></i>
+              <span class="visually-hidden">Click for tooltip</span>
             </div>
-            <div class="tooltip">
+            <!-- </div> -->
+            <!-- /.preferred-lang__container-->
+
+            <div class="tooltip__content">
+              <span class="fa-stack" style="vertical-align: top;">
+                <i class="far fa-circle fa-stack-2x"></i>
+                <i class="fas fa-info fa-stack-1x"></i>
+              </span>
               Let's speak in your language!
             </div>
+
             <div
               class="error-message"
               data-bind="text: $root.errors.preferredLang, visible: $root.errors.preferredLang"
@@ -299,14 +313,16 @@
             Agreement of Terms and Conditions
           </h2>
           <div class="form-control form-control__terms">
-            <input
-              type="checkbox"
-              id="terms"
-              data-bind="checked: $root.terms, css: {'input-error': $root.errors.terms}, event: {change: $root.handleInputChange}"
-            />
-            <label for="terms"
-              >I agree to the terms and conditions of VIPorter program</label
-            >
+            <div>
+              <input
+                type="checkbox"
+                id="terms"
+                data-bind="checked: $root.terms, css: {'input-error': $root.errors.terms}, event: {change: $root.handleInputChange}"
+              />
+              <label for="terms"
+                >I agree to the terms and conditions of VIPorter program</label
+              >
+            </div>
             <div
               class="error-message"
               data-bind="text: $root.errors.terms, visible: $root.errors.terms"

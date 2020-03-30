@@ -243,17 +243,24 @@ h1 {
 }
 button {
   background: #e0af2d;
-  padding: 10px 20px;
-  border: 0;
+  padding: 15px 25px;
+  margin-top: 20px;
+  border: 1px solid #e0af2d;
   -webkit-box-shadow: 1px 1px #744d0a;
           box-shadow: 1px 1px #744d0a;
   cursor: pointer;
+}
+button:hover,
+button:focus {
+  border: 1px solid #002d53;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 .form-section {
   background: #ffffff;
   margin: 30px 0;
   padding: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid #bbbbbb;
 }
 .form-section h2 {
   font-size: 2.2rem;
@@ -284,6 +291,12 @@ select {
   border: 1px solid #757575;
   border-radius: 3px;
   padding: 10px;
+}
+input:focus,
+select:focus {
+  border: 1px solid #bbbbbb;
+  -webkit-box-shadow: 0 0 5px 3px #eeeeee;
+          box-shadow: 0 0 5px 3px #eeeeee;
 }
 .form-control {
   width: calc(100% / 3 - 20px);
@@ -327,12 +340,63 @@ select {
 .form-control__dob .error-message {
   width: 100%;
 }
+/* PREFERRED LANGUAGE */
+.form-control__lang {
+  width: auto;
+  display: grid;
+  grid-template-columns: auto 35px;
+}
+.form-control__lang label {
+  padding-top: 0;
+  grid-row: 1;
+  grid-column: 1 / span 2;
+}
+.form-control__lang .error-message {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+}
+select[id="preferred-lang"] {
+  grid-row: 2;
+  grid-column: 1;
+}
+.tooltip {
+  font-size: 3rem;
+  color: #757575;
+  margin-left: 5px;
+  grid-row: 2;
+  grid-column: 2;
+  cursor: pointer;
+}
+.tooltip__content {
+  background: #d6e1eb;
+  border: 1px solid #6d92b5;
+  font-size: 1.4rem;
+  padding: 20px;
+  grid-row: 3;
+  grid-column: 1 / span 2;
+}
+.tooltip__content .fa-stack {
+  font-size: 1rem;
+}
 /* TERMS AGREEMENT CHECKBOX */
 .form-control__terms {
   width: 100%;
 }
+.form-control__terms div:first-of-type {
+  background: #d6e1eb;
+  border: 2px solid #d6e1eb;
+  border-radius: 3px;
+  padding: 10px;
+}
+.form-control__terms div:first-of-type:hover,
+.form-control__terms div:first-of-type:focus {
+  border: 2px solid #6d92b5;
+}
 .form-control__terms input {
   width: auto;
+}
+.form-control__terms label {
+  padding: 5px;
 }
 /* FORM ERROR STYLES */
 .input-error {
