@@ -86,6 +86,7 @@ function SignUpViewModel() {
   this.isCanadaOrUS = ko.observable(true);
   this.phoneTypeOptions = ["Home", "Business", "Mobile"];
   this.preferredLangOptions = ["English", "French"];
+  this.tooltip = ko.observable();
 
   // INPUT VALUES (user info)
   // login
@@ -150,11 +151,18 @@ function SignUpViewModel() {
 
   // METHODS
   this.showErrorMessage = function(id, message = "This field is required.") {
-    this.errors[id](message);
-    console.log(this.errors[id]());
+    this.errors[id](`<i class="fas fa-exclamation-triangle"></i> ${message}`);
   };
 
   this.submitForm = e => {
+    // close tooltip if open
+    if (this.tooltip()) {
+      this.toggleTooltip();
+    }
+
+    // reset in case user is re-submitting
+    this.errors.hasErrors(false);
+
     // check for blank inputs
     this.checkInputs(e);
   };
@@ -171,7 +179,6 @@ function SignUpViewModel() {
         (form[i].tagName === "SELECT" && form[i].id !== "prov-state")
       ) {
         inputs.push(form[i]);
-        console.log(form[i]);
       }
     }
     // end of for loop
@@ -199,7 +206,6 @@ function SignUpViewModel() {
     }
 
     if (this.password1() !== "") {
-      console.log("password check ran");
       this.checkPasswordMatch();
     }
 
@@ -207,11 +213,14 @@ function SignUpViewModel() {
       this.checkProvState();
     }
 
+    this.checkForErrors();
     this.scrollToError();
 
     // check for no errors - how?
+    if (!this.errors.hasErrors()) {
+      this.addNewUser();
+    }
     // if no errors at all:
-    // this.addNewUser();
   };
   // end of checkInputs function
 
@@ -228,10 +237,8 @@ function SignUpViewModel() {
   this.checkPasswordMatch = () => {
     if (this.password1() !== this.password2()) {
       this.showErrorMessage("password2", "Your password doesn't match!");
-      console.log("no match");
     } else {
-      this.showErrorMessage("password2", ""); // clear error message
-      console.log("cleared p2");
+      this.errors.password2(""); // clear error message
     }
   };
 
@@ -384,9 +391,6 @@ function SignUpViewModel() {
   this.handleInputChange = (param, e) => {
     console.log(param); // what is this? comes out undefined, when used after a select, it's the select value!!!
     const id = this.getInputId(e.target.id);
-
-    console.log(this[id]());
-
     if (this[id] !== "") {
       this.errors[id]("");
     }
@@ -399,19 +403,37 @@ function SignUpViewModel() {
     return id;
   };
 
+  // - after each submission - loop through this.errors to find errors? - if everything is false, set this.errors.hasError to false, if one thing is true, set this.errors.hasError to true
+  this.checkForErrors = () => {
+    const errorItems = Object.values(this.errors);
+    let containsError = false;
+    errorItems.forEach(item => {
+      if (item === "hasErrors") {
+        return false;
+      } else if (item()) {
+        containsError = true;
+      }
+    });
+    if (containsError) {
+      this.errors.hasErrors(true);
+    } else {
+      this.errors.hasErrors(false);
+    }
+    console.log(this.errors.hasErrors());
+    containsError = false; // reset
+  };
+
   this.scrollToError = () => {
     // set a variable to determine if form has errors
-    this.errors.hasErrors(true);
     if (this.errors.hasErrors()) {
       // if true:
       // use querySelector to find first input with 'input-error' class,
-      console.log(document.querySelector(".input-error"));
       const id = document.querySelector(".input-error").id;
       // use the input id in label[for="id"]
       // scroll to the label
       if (id.match(/(dob)/g)) {
         document
-          .querySelector(".dob-form-section")
+          .querySelector(".form-control__dob")
           .scrollIntoView({ behavior: "smooth" });
       } else {
         document
@@ -420,16 +442,20 @@ function SignUpViewModel() {
       }
     }
   };
+
+  this.toggleTooltip = () => {
+    if (!this.tooltip()) {
+      this.tooltip(true);
+    } else {
+      this.tooltip(false);
+    }
+  };
 }
 
 // activate knockout
 ko.applyBindings(new SignUpViewModel());
 
-// Qs:
-//  why did I have to user $root on certian things & not others in html? eg. genderOptions vs dobYearOptions?
-
 // todo:
 // - figure out where to call this.addNewUser() to complete the form submission!
-// - clicking on terms bluebox should trigger checkmark
-// - also triggers style changes
 // - preffered language grid??
+// - need to make this.errors.hasError true when there are errors, but false when there aren't any

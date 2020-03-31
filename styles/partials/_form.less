@@ -60,6 +60,10 @@ select {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  h2 {
+    width: 100%;
+  }
 }
 
 /* DOB section */
@@ -87,6 +91,7 @@ select {
   display: grid;
   // grid-template-rows: auto auto auto;
   grid-template-columns: auto 35px;
+  position: relative;
 
   label {
     padding-top: 0;
@@ -115,14 +120,13 @@ select[id="preferred-lang"] {
 }
 
 .tooltip__content {
-  // display: none;
   background: @light-blue;
   border: 1px solid @medium-blue;
   font-size: @small;
-  padding: 20px;
-  // position: absolute;
+  padding: 10px;
   grid-row: 3;
   grid-column: 1 / span 2;
+  position: absolute;
 
   .fa-stack {
     font-size: 1rem;
@@ -130,29 +134,47 @@ select[id="preferred-lang"] {
 }
 
 /* TERMS AGREEMENT CHECKBOX */
+.terms-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
 .form-control__terms {
   width: 100%;
-
-  div:first-of-type {
-    background: @light-blue;
-    border: 2px solid @light-blue;
-    border-radius: 3px;
-    padding: 10px;
-
-    &:hover,
-    &:focus {
-      border: 2px solid @medium-blue;
-    }
-  }
+  position: relative;
 
   input {
     width: auto;
+    box-shadow: none;
   }
 
   label {
-    padding: 5px;
+    padding-top: 13px;
+    padding-left: 30px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
+}
+
+.terms__container {
+  background: @light-blue;
+  border: 2px solid @light-blue;
+  border-radius: 3px;
+  padding: 10px;
+
+  &:hover,
+  &:focus {
+    border: 2px solid @medium-blue;
+  }
+}
+
+.terms-checked {
+  background: @white;
+  border: 2px solid @medium-blue;
 }
 
 /* FORM ERROR STYLES */

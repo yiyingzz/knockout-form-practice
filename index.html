@@ -43,7 +43,7 @@
               />
               <div
                 class="error-message"
-                data-bind="text: errors.email, visible: errors.email"
+                data-bind="html: errors.email, visible: errors.email"
               ></div>
             </div>
 
@@ -56,7 +56,7 @@
               />
               <div
                 class="error-message"
-                data-bind="text: errors.password1, visible: errors.password1"
+                data-bind="html: errors.password1, visible: errors.password1"
               ></div>
             </div>
 
@@ -69,7 +69,7 @@
               />
               <div
                 class="error-message"
-                data-bind="text: $root.errors.password2, visible: $root.errors.password2"
+                data-bind="html: $root.errors.password2, visible: $root.errors.password2"
               ></div>
             </div>
           </div>
@@ -91,7 +91,7 @@
             />
             <div
               class="error-message"
-              data-bind="text: errors.firstName, visible: errors.firstName"
+              data-bind="html: errors.firstName, visible: errors.firstName"
             ></div>
           </div>
 
@@ -113,7 +113,7 @@
             />
             <div
               class="error-message"
-              data-bind="text: errors.lastName, visible: errors.lastName"
+              data-bind="html: errors.lastName, visible: errors.lastName"
             ></div>
           </div>
 
@@ -127,9 +127,8 @@
             </select>
             <div
               class="error-message"
-              data-bind="text: $root.errors.gender, visible: $root.errors.gender"
+              data-bind="html: $root.errors.gender, visible: $root.errors.gender"
             ></div>
-            <!-- why did I have to user $root here for accessing "errors" and not above for genderOptions??? has to do with new binding context for genderOptions?? -->
           </div>
 
           <fieldset class="form-control__dob">
@@ -163,7 +162,7 @@
             </div>
             <div
               class="error-message"
-              data-bind="text: $root.errors.dob, visible: $root.errors.dob"
+              data-bind="html: $root.errors.dob, visible: $root.errors.dob"
             ></div>
           </fieldset>
 
@@ -176,7 +175,7 @@
             />
             <div
               class="error-message"
-              data-bind="text: $root.errors.streetAddress1, visible: $root.errors.streetAddress1"
+              data-bind="html: $root.errors.streetAddress1, visible: $root.errors.streetAddress1"
             ></div>
           </div>
 
@@ -200,7 +199,7 @@
             ></select>
             <div
               class="error-message"
-              data-bind="text: $root.errors.country, visible: $root.errors.country"
+              data-bind="html: $root.errors.country, visible: $root.errors.country"
             ></div>
           </div>
 
@@ -216,7 +215,7 @@
             ></select>
             <div
               class="error-message"
-              data-bind="text: $root.errors.provState, visible: $root.errors.provState"
+              data-bind="html: $root.errors.provState, visible: $root.errors.provState"
             ></div>
           </div>
 
@@ -229,7 +228,7 @@
             />
             <div
               class="error-message"
-              data-bind="text: $root.errors.townCity, visible: $root.errors.townCity"
+              data-bind="html: $root.errors.townCity, visible: $root.errors.townCity"
             ></div>
           </div>
 
@@ -242,7 +241,7 @@
             />
             <div
               class="error-message"
-              data-bind="text: $root.errors.postalZipCode, visible: $root.errors.postalZipCode"
+              data-bind="html: $root.errors.postalZipCode, visible: $root.errors.postalZipCode"
             ></div>
           </div>
 
@@ -255,7 +254,7 @@
             ></select>
             <div
               class="error-message"
-              data-bind="text: $root.errors.phoneType, visible: $root.errors.phoneType"
+              data-bind="html: $root.errors.phoneType, visible: $root.errors.phoneType"
             ></div>
           </div>
 
@@ -268,7 +267,7 @@
             />
             <div
               class="error-message"
-              data-bind="text: $root.errors.phoneNumber, visible: $root.errors.phoneNumber"
+              data-bind="html: $root.errors.phoneNumber, visible: $root.errors.phoneNumber"
             ></div>
           </div>
 
@@ -286,14 +285,14 @@
               id="preferred-lang"
               data-bind="options: $root.preferredLangOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.preferredLang}"
             ></select>
-            <div class="tooltip">
+            <div class="tooltip" data-bind="click: $root.toggleTooltip">
               <i class="far fa-question-circle" aria-hidden="true"></i>
               <span class="visually-hidden">Click for tooltip</span>
             </div>
             <!-- </div> -->
             <!-- /.preferred-lang__container-->
 
-            <div class="tooltip__content">
+            <div class="tooltip__content" data-bind="visible: $root.tooltip">
               <span class="fa-stack" style="vertical-align: top;">
                 <i class="far fa-circle fa-stack-2x"></i>
                 <i class="fas fa-info fa-stack-1x"></i>
@@ -303,7 +302,7 @@
 
             <div
               class="error-message"
-              data-bind="text: $root.errors.preferredLang, visible: $root.errors.preferredLang"
+              data-bind="html: $root.errors.preferredLang, visible: $root.errors.preferredLang"
             ></div>
           </div>
         </div>
@@ -313,7 +312,10 @@
             Agreement of Terms and Conditions
           </h2>
           <div class="form-control form-control__terms">
-            <div>
+            <div
+              class="terms__container"
+              data-bind="css: {'terms-checked': $root.terms}"
+            >
               <input
                 type="checkbox"
                 id="terms"
@@ -325,12 +327,17 @@
             </div>
             <div
               class="error-message"
-              data-bind="text: $root.errors.terms, visible: $root.errors.terms"
+              data-bind="html: $root.errors.terms, visible: $root.errors.terms"
             ></div>
           </div>
           <button type="submit">Join now</button>
         </div>
       </form>
+      <p class="disclaimer">
+        This is a form made by <a href="https://yiying.ca">Yiying Zou</a> for
+        educational purposes only. None of your information is being saved
+        anywhere!🙂
+      </p>
     </div>
 
     <script
