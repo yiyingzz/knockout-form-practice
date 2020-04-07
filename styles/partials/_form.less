@@ -5,12 +5,13 @@
   border: 1px solid @medium-grey;
 
   h2 {
-    font-size: @large;
+    font-size: @large-text;
     margin-top: 0;
   }
 
   p:first-of-type {
     margin-top: 0;
+    width: 100%;
   }
 }
 
@@ -43,8 +44,6 @@ select {
 }
 
 .form-control {
-  width: calc(100% / 3 - 20px);
-
   input,
   select,
   .error-message {
@@ -52,8 +51,17 @@ select {
   }
 }
 
-.form-control:nth-of-type(3) {
-  margin-right: 0;
+// form input sizes
+.form-control-half {
+  width: calc(50% - 15px);
+}
+
+.form-control-thirds {
+  width: calc(100% / 3 - 20px);
+}
+
+.form-control-quarter {
+  width: calc(25% - 20px);
 }
 
 .personal-section {
@@ -88,8 +96,9 @@ select {
 /* PREFERRED LANGUAGE */
 .form-control__lang {
   width: auto;
+  width: calc(100% / 3 + 15px);
   display: grid;
-  // grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto auto;
   grid-template-columns: auto 35px;
   position: relative;
 
@@ -122,8 +131,9 @@ select[id="preferred-lang"] {
 .tooltip__content {
   background: @light-blue;
   border: 1px solid @medium-blue;
-  font-size: @small;
+  font-size: @small-text;
   padding: 10px;
+  width: 100%;
   grid-row: 3;
   grid-column: 1 / span 2;
   position: absolute;

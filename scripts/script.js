@@ -410,10 +410,17 @@ function SignUpViewModel() {
     errorItems.forEach(item => {
       if (item === "hasErrors") {
         return false;
-      } else if (item()) {
+      } else if (!item()) {
+        console.log("item is false");
+        console.log(item());
+        // this.errors.hasErrors(false);
+        // console.log("logging has errors");
+        // console.log(this.errors.hasErrors());
+      } else {
         containsError = true;
       }
     });
+
     if (containsError) {
       this.errors.hasErrors(true);
     } else {
@@ -421,6 +428,7 @@ function SignUpViewModel() {
     }
     console.log(this.errors.hasErrors());
     containsError = false; // reset
+    // hasErrors must be set outside of the loop otherwise it would change if the last item was true/false
   };
 
   this.scrollToError = () => {
