@@ -131,7 +131,7 @@
             ></div>
           </div>
 
-          <fieldset class="form-control__dob">
+          <fieldset class="form-control__dob clearfix">
             <legend>Date of birth</legend>
 
             <div class="form-control">
@@ -283,7 +283,7 @@
             <select
               name="preferred-lang"
               id="preferred-lang"
-              data-bind="options: $root.preferredLangOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.preferredLang}"
+              data-bind="options: $root.preferredLangOptions, value: $root.preferredLang, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.preferredLang}"
             ></select>
             <div class="tooltip" data-bind="click: $root.toggleTooltip">
               <i class="far fa-question-circle" aria-hidden="true"></i>

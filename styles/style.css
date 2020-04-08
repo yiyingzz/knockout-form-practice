@@ -224,6 +224,7 @@ html {
 }
 html {
   font-size: 62.5%;
+  scroll-behavior: smooth;
 }
 body {
   font-family: "Roboto", sans-serif;
@@ -298,6 +299,7 @@ select {
   border: 1px solid #757575;
   border-radius: 3px;
   padding: 10px;
+  color: #002d53;
 }
 input:focus,
 select:focus {
@@ -337,21 +339,22 @@ select:focus {
   border: 0;
   padding: 0;
   margin: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  width: calc(66% - 5px);
+  width: calc((100% / 3) * 2 - 10px);
+}
+.form-control__dob legend {
+  width: 100%;
 }
 .form-control__dob .form-control {
-  width: calc(100% / 3 - 15px);
+  width: calc(33.3% - (40px / 3));
+  margin-right: 20px;
+  float: left;
+}
+.form-control__dob .form-control:nth-of-type(3) {
+  margin-right: 0;
 }
 .form-control__dob .error-message {
   width: 100%;
+  clear: both;
 }
 /* PREFERRED LANGUAGE */
 .form-control__lang {

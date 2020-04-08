@@ -36,6 +36,7 @@ select {
   border: 1px solid @dark-grey;
   border-radius: 3px;
   padding: 10px;
+  color: @dark-blue;
 
   &:focus {
     border: 1px solid @medium-grey;
@@ -79,17 +80,25 @@ select {
   border: 0;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: calc(66% - 5px);
+  width: calc((100% / 3) * 2 - 10px);
+
+  legend {
+    width: 100%;
+  }
 
   .form-control {
-    width: calc(100% / 3 - 15px);
+    width: calc(33.3% - (40px / 3));
+    margin-right: 20px;
+    float: left;
+  }
+
+  .form-control:nth-of-type(3) {
+    margin-right: 0;
   }
 
   .error-message {
     width: 100%;
+    clear: both;
   }
 }
 

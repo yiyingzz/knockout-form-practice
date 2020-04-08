@@ -28,7 +28,7 @@ function SignUpViewModel() {
     1992,
     1993,
     1994,
-    1995
+    1995,
   ];
   this.dobMonthOptions = [
     "January",
@@ -42,7 +42,7 @@ function SignUpViewModel() {
     "September",
     "October",
     "November",
-    "December"
+    "December",
   ];
   this.dobDayOptions = [
     1,
@@ -75,13 +75,13 @@ function SignUpViewModel() {
     28,
     29,
     30,
-    31
+    31,
   ];
   this.countryOptions = ["Canada", "USA", "China", "France"];
   this.provStateOptions = ko.observableArray([]);
   this.provStateData = {
     canada: ["Alberta", "Ontario", "Prince Edward Island", "Quebec"],
-    usa: ["New York", "Florida", "California", "Minnesota", "Maryland"]
+    usa: ["New York", "Florida", "California", "Minnesota", "Maryland"],
   };
   this.isCanadaOrUS = ko.observable(true);
   this.phoneTypeOptions = ["Home", "Business", "Mobile"];
@@ -146,15 +146,15 @@ function SignUpViewModel() {
     phoneType: ko.observable(),
     phoneNumber: ko.observable(),
     preferredLang: ko.observable(),
-    terms: ko.observable()
+    terms: ko.observable(),
   };
 
   // METHODS
-  this.showErrorMessage = function(id, message = "This field is required.") {
+  this.showErrorMessage = function (id, message = "This field is required.") {
     this.errors[id](`<i class="fas fa-exclamation-triangle"></i> ${message}`);
   };
 
-  this.submitForm = e => {
+  this.submitForm = (e) => {
     // close tooltip if open
     if (this.tooltip()) {
       this.toggleTooltip();
@@ -168,7 +168,7 @@ function SignUpViewModel() {
   };
 
   // This just checks for blank inputs, then calls the more specific error checking functions
-  this.checkInputs = form => {
+  this.checkInputs = (form) => {
     // loop through list to grab all input & select nodes
     let inputs = [];
     for (let i = 0; i < form.length; i++) {
@@ -185,12 +185,17 @@ function SignUpViewModel() {
 
     // then below, loop through the inputs, feed input IDs into this[inputId]() === "" to check for valid text
     // showErrorMessage same for all of them
-    inputs.forEach(item => {
+    inputs.forEach((item) => {
       // converting css class names into camelCase for their JS counterparts
       let id = this.getInputId(item.id);
-
+      console.log(id);
+      console.log(this[id]());
       // check if the input is empty or false
-      if (this[id]() === "" || this[id]() === false) {
+      if (
+        this[id]() === "" ||
+        this[id]() === false ||
+        this[id]() === undefined
+      ) {
         // this is to create just 1 error for all 3 date of birth select elements
         if (id.match(/(dob)/g)) {
           this.showErrorMessage("dob");
@@ -214,11 +219,14 @@ function SignUpViewModel() {
     }
 
     this.checkForErrors();
-    this.scrollToError();
 
     // check for no errors - how?
     if (!this.errors.hasErrors()) {
       this.addNewUser();
+    } else {
+      console.log("scrollToError running");
+      this.scrollToError();
+      console.log("scrollToError done");
     }
     // if no errors at all:
   };
@@ -255,21 +263,19 @@ function SignUpViewModel() {
   };
 
   // add new user to system once "Join now" button is pressed
-  this.addNewUser = param => {
-    console.log("form submitted!!👍");
-    console.log(param); // what is this? dom node?
-
+  this.addNewUser = () => {
     // set user info (probably should have just made a user object with all these to begin with)
+    console.log(this.firstName());
     const name = {
       firstName: this.firstName(),
       middleName: this.middleName(),
-      lastName: this.lastName()
+      lastName: this.lastName(),
     };
 
     const dob = {
       year: this.dobYear(),
       month: this.dobMonth(),
-      day: this.dobDay()
+      day: this.dobDay(),
     };
 
     const address = {
@@ -278,19 +284,19 @@ function SignUpViewModel() {
       country: this.country(),
       provState: this.provState(),
       townCity: this.townCity(),
-      postalZipCode: this.postalZipCode()
+      postalZipCode: this.postalZipCode(),
     };
 
     const contactInfo = {
       phoneType: this.phoneType(),
       phoneNumber: this.phoneNumber(),
-      email: this.email()
+      email: this.email(),
     };
 
     const login = {
       email: this.email(),
       password: this.password1(),
-      language: this.preferredLang()
+      language: this.preferredLang(),
     };
 
     // create new user
@@ -303,13 +309,20 @@ function SignUpViewModel() {
       login
     );
     this.users.push(newUser);
+
+    // display submitted data in console:
+    console.log("New user registered!!👍");
+    console.log(newUser);
+    console.log("\n Full list of users:");
     console.log(this.users());
 
     this.resetInputs();
   };
 
   // clear form once data has been submitted successfully
-  this.resetInputs = function() {
+  this.resetInputs = () => {
+    console.log("resetInputs ran!");
+    console.log(this.preferredLang());
     // login
     this.email("");
     this.password1("");
@@ -321,27 +334,33 @@ function SignUpViewModel() {
     this.lastName("");
 
     // gender & dob
-    this.gender("");
-    this.dobYear("");
-    this.dobMonth("");
-    this.dobDay("");
+    this.gender(undefined);
+    this.dobYear(undefined);
+    this.dobMonth(undefined);
+    this.dobDay(undefined);
 
     // address
     this.isCanadaOrUS(true);
     this.streetAddress1("");
     this.streetAddress2("");
-    this.country("");
-    this.provState("");
+    this.country(undefined);
+    this.provState(undefined);
     this.townCity("");
     this.postalZipCode("");
 
     // contact
-    this.phoneType("");
+    this.phoneType(undefined);
     this.phoneNumber("");
-    this.preferredLang("");
+    this.preferredLang(undefined);
+
+    // terms
+    this.terms(false);
+
+    console.log(this.preferredLang());
+    console.log("resetInputs finished!");
   };
 
-  this.setUserCountry = function(country) {
+  this.setUserCountry = function (country) {
     if (country !== "Canada" && country !== "USA") {
       this.isCanadaOrUS(false); // to hide prov/state options
     } else {
@@ -349,7 +368,7 @@ function SignUpViewModel() {
       if (this.provStateOptions().length > 0) {
         this.provStateOptions.splice(0); // removes previous options in dropdown
       }
-      this.provStateData[country.toLowerCase()].forEach(item => {
+      this.provStateData[country.toLowerCase()].forEach((item) => {
         this.provStateOptions.push(item);
       });
     }
@@ -357,8 +376,10 @@ function SignUpViewModel() {
   };
 
   // one function for all select elements!
-  this.handleSelectChange = (value, e) => {
+  this.handleSelectChange = (val, e) => {
     const id = this.getInputId(e.target.id);
+    const value = e.target.value;
+    console.log(value);
 
     if (value !== undefined) {
       if (id === "country") {
@@ -373,6 +394,7 @@ function SignUpViewModel() {
       this.showErrorMessage("dob");
     } else {
       // if there isn't a value
+      console.log(id);
       this.showErrorMessage(id);
     }
 
@@ -396,27 +418,31 @@ function SignUpViewModel() {
     }
   };
 
-  this.getInputId = cssClass => {
-    const id = cssClass.replace(/-(\w)/g, function($1, $2) {
+  this.getInputId = (cssClass) => {
+    const id = cssClass.replace(/-(\w)/g, function ($1, $2) {
       return $2.toUpperCase();
     });
     return id;
   };
 
-  // - after each submission - loop through this.errors to find errors? - if everything is false, set this.errors.hasError to false, if one thing is true, set this.errors.hasError to true
+  // after each submission - loop through this.errors to find if errors exist
+  // if everything is false, set this.errors.hasError to false, if one thing is true, set this.errors.hasError to true
   this.checkForErrors = () => {
+    // Object.values lets us get the value of the key-value pairs on the errors object
     const errorItems = Object.values(this.errors);
     let containsError = false;
-    errorItems.forEach(item => {
+
+    // loop through each value to see which ones have errors
+    errorItems.forEach((item) => {
+      console.log(item());
       if (item === "hasErrors") {
-        return false;
-      } else if (!item()) {
-        console.log("item is false");
+        // we ignore the hasErrors value (this is our boolean for if any errors exist at all)
+        return false; // I don't think this is actually doing anything??
+      } else if (item() !== "" || item() !== false || item() !== undefined) {
         console.log(item());
-        // this.errors.hasErrors(false);
-        // console.log("logging has errors");
-        // console.log(this.errors.hasErrors());
+        this.errors.hasErrors(false);
       } else {
+        console.log(item());
         containsError = true;
       }
     });
@@ -426,28 +452,23 @@ function SignUpViewModel() {
     } else {
       this.errors.hasErrors(false);
     }
-    console.log(this.errors.hasErrors());
     containsError = false; // reset
     // hasErrors must be set outside of the loop otherwise it would change if the last item was true/false
+    console.log(this.errors.hasErrors());
   };
 
   this.scrollToError = () => {
-    // set a variable to determine if form has errors
-    if (this.errors.hasErrors()) {
-      // if true:
-      // use querySelector to find first input with 'input-error' class,
-      const id = document.querySelector(".input-error").id;
-      // use the input id in label[for="id"]
-      // scroll to the label
-      if (id.match(/(dob)/g)) {
-        document
-          .querySelector(".form-control__dob")
-          .scrollIntoView({ behavior: "smooth" });
-      } else {
-        document
-          .querySelector(`label[for='${id}']`)
-          .scrollIntoView({ behavior: "smooth" });
-      }
+    // use querySelector to find first input with 'input-error' class,
+    const id = document.querySelector(".input-error").id;
+
+    // use the input id in label[for="id"]
+    // scroll to the label
+    if (id.match(/(dob)/g)) {
+      document.querySelector(".form-control__dob").scrollIntoView();
+    } else {
+      document
+        .querySelector(`label[for="${id}"]`)
+        .parentElement.scrollIntoView();
     }
   };
 
@@ -464,6 +485,6 @@ function SignUpViewModel() {
 ko.applyBindings(new SignUpViewModel());
 
 // todo:
-// - figure out where to call this.addNewUser() to complete the form submission!
-// - preffered language grid??
-// - need to make this.errors.hasError true when there are errors, but false when there aren't any
+// resetInputs doesn't reset select elements
+// - pretty sure this has to do with using value: $data...
+//
