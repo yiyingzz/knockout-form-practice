@@ -28,7 +28,7 @@ function SignUpViewModel() {
     1992,
     1993,
     1994,
-    1995,
+    1995
   ];
   this.dobMonthOptions = [
     "January",
@@ -42,7 +42,7 @@ function SignUpViewModel() {
     "September",
     "October",
     "November",
-    "December",
+    "December"
   ];
   this.dobDayOptions = [
     1,
@@ -75,13 +75,13 @@ function SignUpViewModel() {
     28,
     29,
     30,
-    31,
+    31
   ];
   this.countryOptions = ["Canada", "USA", "China", "France"];
   this.provStateOptions = ko.observableArray([]);
   this.provStateData = {
     canada: ["Alberta", "Ontario", "Prince Edward Island", "Quebec"],
-    usa: ["New York", "Florida", "California", "Minnesota", "Maryland"],
+    usa: ["New York", "Florida", "California", "Minnesota", "Maryland"]
   };
   this.isCanadaOrUS = ko.observable(true);
   this.phoneTypeOptions = ["Home", "Business", "Mobile"];
@@ -128,25 +128,25 @@ function SignUpViewModel() {
   // ERROR OBJECT
   this.errors = {
     hasErrors: ko.observable(false),
-    email: ko.observable(),
-    password1: ko.observable(),
-    password2: ko.observable(),
-    firstName: ko.observable(),
-    lastName: ko.observable(),
-    gender: ko.observable(),
-    dobYear: ko.observable(),
-    dobMonth: ko.observable(),
-    dobDay: ko.observable(),
-    dob: ko.observable(),
-    streetAddress1: ko.observable(),
-    country: ko.observable(),
-    provState: ko.observable(),
-    townCity: ko.observable(),
-    postalZipCode: ko.observable(),
-    phoneType: ko.observable(),
-    phoneNumber: ko.observable(),
-    preferredLang: ko.observable(),
-    terms: ko.observable(),
+    email: ko.observable(""),
+    password1: ko.observable(""),
+    password2: ko.observable(""),
+    firstName: ko.observable(""),
+    lastName: ko.observable(""),
+    gender: ko.observable(""),
+    dobYear: ko.observable(""),
+    dobMonth: ko.observable(""),
+    dobDay: ko.observable(""),
+    dob: ko.observable(""),
+    streetAddress1: ko.observable(""),
+    country: ko.observable(""),
+    provState: ko.observable(""),
+    townCity: ko.observable(""),
+    postalZipCode: ko.observable(""),
+    phoneType: ko.observable(""),
+    phoneNumber: ko.observable(""),
+    preferredLang: ko.observable(""),
+    terms: ko.observable("")
   };
 
   // METHODS
@@ -220,6 +220,9 @@ function SignUpViewModel() {
 
     this.checkForErrors();
 
+    console.log("are there errors?");
+    console.log(this.errors.hasErrors());
+
     // check for no errors - how?
     if (!this.errors.hasErrors()) {
       this.addNewUser();
@@ -269,13 +272,13 @@ function SignUpViewModel() {
     const name = {
       firstName: this.firstName(),
       middleName: this.middleName(),
-      lastName: this.lastName(),
+      lastName: this.lastName()
     };
 
     const dob = {
       year: this.dobYear(),
       month: this.dobMonth(),
-      day: this.dobDay(),
+      day: this.dobDay()
     };
 
     const address = {
@@ -284,19 +287,19 @@ function SignUpViewModel() {
       country: this.country(),
       provState: this.provState(),
       townCity: this.townCity(),
-      postalZipCode: this.postalZipCode(),
+      postalZipCode: this.postalZipCode()
     };
 
     const contactInfo = {
       phoneType: this.phoneType(),
       phoneNumber: this.phoneNumber(),
-      email: this.email(),
+      email: this.email()
     };
 
     const login = {
       email: this.email(),
       password: this.password1(),
-      language: this.preferredLang(),
+      language: this.preferredLang()
     };
 
     // create new user
@@ -316,7 +319,7 @@ function SignUpViewModel() {
     console.log("\n Full list of users:");
     console.log(this.users());
 
-    this.resetInputs();
+    // this.resetInputs();
   };
 
   // clear form once data has been submitted successfully
@@ -428,24 +431,41 @@ function SignUpViewModel() {
   // after each submission - loop through this.errors to find if errors exist
   // if everything is false, set this.errors.hasError to false, if one thing is true, set this.errors.hasError to true
   this.checkForErrors = () => {
+    console.log("starting checkForErrors");
     // Object.values lets us get the value of the key-value pairs on the errors object
     const errorItems = Object.values(this.errors);
+    console.log("logging errorItems");
+    console.log(errorItems);
     let containsError = false;
 
     // loop through each value to see which ones have errors
-    errorItems.forEach((item) => {
-      console.log(item());
-      if (item === "hasErrors") {
-        // we ignore the hasErrors value (this is our boolean for if any errors exist at all)
-        return false; // I don't think this is actually doing anything??
-      } else if (item() !== "" || item() !== false || item() !== undefined) {
-        console.log(item());
-        this.errors.hasErrors(false);
-      } else {
-        console.log(item());
+
+    // errorItems.forEach((item) => {
+    // console.log(item());
+    // if (item === "hasErrors") {
+    //   // we ignore the hasErrors value (this is our boolean for if any errors exist at all)
+    //   console.log("IS THIS LOGGING??? HELLOOOOOO???");
+    //   console.log("logging hasErrors item");
+    //   console.log(item);
+    //   return false; // I don't think this is actually doing anything??
+    // } else
+    console.log(errorItems[0]());
+    console.log(errorItems[1]());
+
+    for (let i = 1; i < errorItems.length; i++) {
+      if (
+        errorItems[i]() !== undefined ||
+        errorItems[i]() !== "" ||
+        errorItems[i]() !== false
+      ) {
+        //if (item() !== "" || item() !== false || item() !== undefined) {
+        console.log(errorItems[i]);
+        console.log(errorItems[i]());
+        // this.errors.hasErrors(false);
         containsError = true;
+        break; // break on the first error, no need to check the rest
       }
-    });
+    }
 
     if (containsError) {
       this.errors.hasErrors(true);
@@ -454,7 +474,9 @@ function SignUpViewModel() {
     }
     containsError = false; // reset
     // hasErrors must be set outside of the loop otherwise it would change if the last item was true/false
+    console.log("are there errors?");
     console.log(this.errors.hasErrors());
+    console.log("end of checkForErrors");
   };
 
   this.scrollToError = () => {

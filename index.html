@@ -122,12 +122,12 @@
             <select
               name="gender"
               id="gender"
-              data-bind="options: genderOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: handleSelectChange}, css: {'input-error': errors.gender}"
+              data-bind="options: genderOptions, value: gender, optionsCaption: 'Please Select', event: {change: handleSelectChange}, css: {'input-error': errors.gender}"
             >
             </select>
             <div
               class="error-message"
-              data-bind="html: $root.errors.gender, visible: $root.errors.gender"
+              data-bind="html: errors.gender, visible: errors.gender"
             ></div>
           </div>
 
@@ -139,7 +139,7 @@
               <select
                 name="dob-year"
                 id="dob-year"
-                data-bind="options: $root.dobYearOptions, value: $data, optionText: $data, optionsCaption: 'Year', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.dobYear}"
+                data-bind="options: dobYearOptions, value: dobYear, optionsCaption: 'Year', event: {change: handleSelectChange}, css: {'input-error': errors.dobYear}"
               ></select>
             </div>
 
@@ -148,7 +148,7 @@
               <select
                 name="dob-month"
                 id="dob-month"
-                data-bind="options: $root.dobMonthOptions, value: $data, optionText: $data, optionsCaption: 'Month', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.dobMonth}"
+                data-bind="options: dobMonthOptions, value: dobMonth,optionsCaption: 'Month', event: {change: handleSelectChange}, css: {'input-error': errors.dobMonth}"
               ></select>
             </div>
 
@@ -157,12 +157,12 @@
               <select
                 name="dob-day"
                 id="dob-day"
-                data-bind="options: $root.dobDayOptions, value: $data, optionText: $data, optionsCaption: 'Day', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.dobDay}"
+                data-bind="options: dobDayOptions, value: dobDay, optionsCaption: 'Day', event: {change: handleSelectChange}, css: {'input-error': errors.dobDay}"
               ></select>
             </div>
             <div
               class="error-message"
-              data-bind="html: $root.errors.dob, visible: $root.errors.dob"
+              data-bind="html: errors.dob, visible: errors.dob"
             ></div>
           </fieldset>
 
@@ -171,11 +171,11 @@
             <input
               type="text"
               id="street-address-1"
-              data-bind="value: $root.streetAddress1, css: {'input-error': $root.errors.streetAddress1}, event: {change: $root.handleInputChange}"
+              data-bind="value: streetAddress1, css: {'input-error': errors.streetAddress1}, event: {change: handleInputChange}"
             />
             <div
               class="error-message"
-              data-bind="html: $root.errors.streetAddress1, visible: $root.errors.streetAddress1"
+              data-bind="html: errors.streetAddress1, visible: errors.streetAddress1"
             ></div>
           </div>
 
@@ -186,7 +186,7 @@
             <input
               type="text"
               id="street-address-2"
-              data-bind="value: $root.streetAddress2, css: {'input-error': $root.errors.streetAddress2}"
+              data-bind="value: streetAddress2, css: {'input-error': errors.streetAddress2}"
             />
           </div>
 
@@ -195,27 +195,27 @@
             <select
               name="country"
               id="country"
-              data-bind="options: $root.countryOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.country}"
+              data-bind="options: countryOptions, value: country, optionsCaption: 'Please Select', event: {change: handleSelectChange}, css: {'input-error': errors.country}"
             ></select>
             <div
               class="error-message"
-              data-bind="html: $root.errors.country, visible: $root.errors.country"
+              data-bind="html: errors.country, visible: errors.country"
             ></div>
           </div>
 
           <div
             class="form-control form-control-quarter prov-state-form-control"
-            data-bind="visible: $root.isCanadaOrUS"
+            data-bind="visible: isCanadaOrUS"
           >
             <label for="prov-state">Province or state</label>
             <select
               name="prov-state"
               id="prov-state"
-              data-bind="options: $root.provStateOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.provState}"
+              data-bind="options: provStateOptions, value: provState, optionsCaption: 'Please Select', event: {change: handleSelectChange}, css: {'input-error': errors.provState}"
             ></select>
             <div
               class="error-message"
-              data-bind="html: $root.errors.provState, visible: $root.errors.provState"
+              data-bind="html: errors.provState, visible: errors.provState"
             ></div>
           </div>
 
@@ -224,11 +224,11 @@
             <input
               type="text"
               id="town-city"
-              data-bind="value: $root.townCity, css: {'input-error': $root.errors.townCity}, event: {change: $root.handleInputChange}"
+              data-bind="value: townCity, css: {'input-error': errors.townCity}, event: {change: handleInputChange}"
             />
             <div
               class="error-message"
-              data-bind="html: $root.errors.townCity, visible: $root.errors.townCity"
+              data-bind="html: errors.townCity, visible: errors.townCity"
             ></div>
           </div>
 
@@ -237,11 +237,11 @@
             <input
               type="text"
               id="postal-zip-code"
-              data-bind="value: $root.postalZipCode, css: {'input-error': $root.errors.postalZipCode}, event: {change: $root.handleInputChange}"
+              data-bind="value: postalZipCode, css: {'input-error': errors.postalZipCode}, event: {change: handleInputChange}"
             />
             <div
               class="error-message"
-              data-bind="html: $root.errors.postalZipCode, visible: $root.errors.postalZipCode"
+              data-bind="html: errors.postalZipCode, visible: errors.postalZipCode"
             ></div>
           </div>
 
@@ -250,11 +250,11 @@
             <select
               name="phone-type"
               id="phone-type"
-              data-bind="options: $root.phoneTypeOptions, value: $data, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.phoneType}"
+              data-bind="options: phoneTypeOptions, value: phoneType, optionsCaption: 'Please Select', event: {change: handleSelectChange}, css: {'input-error': errors.phoneType}"
             ></select>
             <div
               class="error-message"
-              data-bind="html: $root.errors.phoneType, visible: $root.errors.phoneType"
+              data-bind="html: errors.phoneType, visible: errors.phoneType"
             ></div>
           </div>
 
@@ -263,11 +263,11 @@
             <input
               type="text"
               id="phone-number"
-              data-bind="value: $root.phoneNumber, css: {'input-error': $root.errors.phoneNumber}, event: {change: $root.handleInputChange}"
+              data-bind="value: phoneNumber, css: {'input-error': errors.phoneNumber}, event: {change: handleInputChange}"
             />
             <div
               class="error-message"
-              data-bind="html: $root.errors.phoneNumber, visible: $root.errors.phoneNumber"
+              data-bind="html: errors.phoneNumber, visible: errors.phoneNumber"
             ></div>
           </div>
 
@@ -279,18 +279,15 @@
 
           <div class="form-control form-control__lang">
             <label for="preferred-lang">Preferred language</label>
-            <!-- <div class="preferred-lang__container"> -->
             <select
               name="preferred-lang"
               id="preferred-lang"
-              data-bind="options: $root.preferredLangOptions, value: $root.preferredLang, optionText: $data, optionsCaption: 'Please Select', event: {change: $root.handleSelectChange}, css: {'input-error': $root.errors.preferredLang}"
+              data-bind="options: preferredLangOptions, value: preferredLang, optionsCaption: 'Please Select', event: {change: handleSelectChange}, css: {'input-error': errors.preferredLang}"
             ></select>
-            <div class="tooltip" data-bind="click: $root.toggleTooltip">
+            <div class="tooltip" data-bind="click: toggleTooltip">
               <i class="far fa-question-circle" aria-hidden="true"></i>
               <span class="visually-hidden">Click for tooltip</span>
             </div>
-            <!-- </div> -->
-            <!-- /.preferred-lang__container-->
 
             <div class="tooltip__content" data-bind="visible: $root.tooltip">
               <span class="fa-stack" style="vertical-align: top;">
@@ -302,7 +299,7 @@
 
             <div
               class="error-message"
-              data-bind="html: $root.errors.preferredLang, visible: $root.errors.preferredLang"
+              data-bind="html: errors.preferredLang, visible: errors.preferredLang"
             ></div>
           </div>
         </div>
@@ -314,12 +311,12 @@
           <div class="form-control form-control__terms">
             <div
               class="terms__container"
-              data-bind="css: {'terms-checked': $root.terms}"
+              data-bind="css: {'terms-checked': terms}"
             >
               <input
                 type="checkbox"
                 id="terms"
-                data-bind="checked: $root.terms, css: {'input-error': $root.errors.terms}, event: {change: $root.handleInputChange}"
+                data-bind="checked: terms, css: {'input-error': errors.terms}, event: {change: handleInputChange}"
               />
               <label for="terms"
                 >I agree to the terms and conditions of VIPorter program</label
@@ -327,7 +324,7 @@
             </div>
             <div
               class="error-message"
-              data-bind="html: $root.errors.terms, visible: $root.errors.terms"
+              data-bind="html: errors.terms, visible: errors.terms"
             ></div>
           </div>
           <button type="submit">Join now</button>
