@@ -8,10 +8,6 @@
       href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
       rel="stylesheet"
     />
-    <script
-      src="https://kit.fontawesome.com/31c9dfb07b.js"
-      crossorigin="anonymous"
-    ></script>
     <link rel="stylesheet" href="styles/style.css" />
   </head>
   <body>
@@ -22,6 +18,26 @@
         receive your VIPorter number instantly; then add it to your booking to
         earn points when you fly.
       </p>
+
+      <div class="success-message">
+        <p>
+          <svg
+            class="icon-checkmark"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill="#000000"
+              d="M13.5 2l-7.5 7.5-3.5-3.5-2.5 2.5 6 6 10-10z"
+            ></path>
+          </svg>
+          Your information has been submitted.
+        </p>
+      </div>
 
       <form data-bind="submit: submitForm" novalidate>
         <div class="form-section login-section">
@@ -285,15 +301,43 @@
               data-bind="options: preferredLangOptions, value: preferredLang, optionsCaption: 'Please Select', event: {change: handleSelectChange}, css: {'input-error': errors.preferredLang}"
             ></select>
             <div class="tooltip" data-bind="click: toggleTooltip">
-              <i class="far fa-question-circle" aria-hidden="true"></i>
+              <svg
+                class="icon-question"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill="#000000"
+                  d="M7 11h2v2h-2zM11 4c0.552 0 1 0.448 1 1v3l-3 2h-2v-1l3-2v-1h-5v-2h6zM8 1.5c-1.736 0-3.369 0.676-4.596 1.904s-1.904 2.86-1.904 4.596c0 1.736 0.676 3.369 1.904 4.596s2.86 1.904 4.596 1.904c1.736 0 3.369-0.676 4.596-1.904s1.904-2.86 1.904-4.596c0-1.736-0.676-3.369-1.904-4.596s-2.86-1.904-4.596-1.904zM8 0v0c4.418 0 8 3.582 8 8s-3.582 8-8 8c-4.418 0-8-3.582-8-8s3.582-8 8-8z"
+                ></path>
+              </svg>
               <span class="visually-hidden">Click for tooltip</span>
             </div>
 
-            <div class="tooltip__content" data-bind="visible: $root.tooltip">
-              <span class="fa-stack" style="vertical-align: top;">
-                <i class="far fa-circle fa-stack-2x"></i>
-                <i class="fas fa-info fa-stack-1x"></i>
-              </span>
+            <div class="tooltip__content" data-bind="visible: tooltip">
+              <svg
+                class="icon-info"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill="#000000"
+                  d="M7 4.75c0-0.412 0.338-0.75 0.75-0.75h0.5c0.412 0 0.75 0.338 0.75 0.75v0.5c0 0.412-0.338 0.75-0.75 0.75h-0.5c-0.412 0-0.75-0.338-0.75-0.75v-0.5z"
+                ></path>
+                <path fill="#000000" d="M10 12h-4v-1h1v-3h-1v-1h3v4h1z"></path>
+                <path
+                  fill="#000000"
+                  d="M8 0c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zM8 14.5c-3.59 0-6.5-2.91-6.5-6.5s2.91-6.5 6.5-6.5 6.5 2.91 6.5 6.5-2.91 6.5-6.5 6.5z"
+                ></path>
+              </svg>
               Let's speak in your language!
             </div>
 

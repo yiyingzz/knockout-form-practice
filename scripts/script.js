@@ -151,7 +151,15 @@ function SignUpViewModel() {
 
   // METHODS
   this.showErrorMessage = function (id, message = "This field is required.") {
-    this.errors[id](`<i class="fas fa-exclamation-triangle"></i> ${message}`);
+    const warningIcon = ` 
+    <svg class="icon-warning" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+      <path fill="#000000" d="M8 1.45l6.705 13.363h-13.409l6.705-13.363zM8 0c-0.345 0-0.69 0.233-0.951 0.698l-6.829 13.611c-0.523 0.93-0.078 1.691 0.989 1.691h13.583c1.067 0 1.512-0.761 0.989-1.691h0l-6.829-13.611c-0.262-0.465-0.606-0.698-0.951-0.698v0z"></path>
+      <path fill="#000000" d="M9 13c0 0.552-0.448 1-1 1s-1-0.448-1-1c0-0.552 0.448-1 1-1s1 0.448 1 1z"></path>
+      <path fill="#000000" d="M8 11c-0.552 0-1-0.448-1-1v-3c0-0.552 0.448-1 1-1s1 0.448 1 1v3c0 0.552-0.448 1-1 1z"></path>
+    </svg> 
+    `;
+    // this.errors[id](`<i class="fas fa-exclamation-triangle"></i> ${message}`);
+    this.errors[id](warningIcon + message);
   };
 
   this.submitForm = (e) => {
@@ -215,6 +223,8 @@ function SignUpViewModel() {
     }
 
     if (this.country() === "Canada" || this.country() === "USA") {
+      console.log("checked for Canada or US");
+      console.log("country value: " + this.country());
       this.checkProvState();
     }
 
@@ -231,14 +241,13 @@ function SignUpViewModel() {
       this.scrollToError();
       console.log("scrollToError done");
     }
-    // if no errors at all:
   };
   // end of checkInputs function
 
   this.checkEmailValid = () => {
-    // email regex from W3C
+    // email regex from emailregex.com
     const emailCheck = RegExp(
-      /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+      /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
     );
     if (!emailCheck.test(this.email())) {
       this.showErrorMessage("email", "Please enter a valid email address.");
@@ -254,15 +263,13 @@ function SignUpViewModel() {
   };
 
   this.checkProvState = () => {
-    // check for province/state - if it's not us/canada, dont give it an error
-    // first need to determine if its US/Canada, then we do this check
-    if (
-      this.provState() === "Canada" ||
-      this.provState() === "USA" ||
-      this.provState() === ""
-    ) {
+    console.log("checkProvState started");
+    if (this.provState() === "" || this.provState() === undefined) {
       this.showErrorMessage("provState");
     }
+    console.log("country value: " + this.country());
+    console.log("provState value: " + this.provState());
+    console.log("checkProvState ran");
   };
 
   // add new user to system once "Join now" button is pressed
@@ -319,7 +326,7 @@ function SignUpViewModel() {
     console.log("\n Full list of users:");
     console.log(this.users());
 
-    // this.resetInputs();
+    this.resetInputs();
   };
 
   // clear form once data has been submitted successfully
@@ -337,24 +344,24 @@ function SignUpViewModel() {
     this.lastName("");
 
     // gender & dob
-    this.gender(undefined);
-    this.dobYear(undefined);
-    this.dobMonth(undefined);
-    this.dobDay(undefined);
+    this.gender("");
+    this.dobYear("");
+    this.dobMonth("");
+    this.dobDay("");
 
     // address
     this.isCanadaOrUS(true);
     this.streetAddress1("");
     this.streetAddress2("");
-    this.country(undefined);
-    this.provState(undefined);
+    this.country("");
+    this.provState("");
     this.townCity("");
     this.postalZipCode("");
 
     // contact
-    this.phoneType(undefined);
+    this.phoneType("");
     this.phoneNumber("");
-    this.preferredLang(undefined);
+    this.preferredLang("");
 
     // terms
     this.terms(false);
@@ -434,46 +441,27 @@ function SignUpViewModel() {
     console.log("starting checkForErrors");
     // Object.values lets us get the value of the key-value pairs on the errors object
     const errorItems = Object.values(this.errors);
-    console.log("logging errorItems");
-    console.log(errorItems);
-    let containsError = false;
-
-    // loop through each value to see which ones have errors
-
-    // errorItems.forEach((item) => {
-    // console.log(item());
-    // if (item === "hasErrors") {
-    //   // we ignore the hasErrors value (this is our boolean for if any errors exist at all)
-    //   console.log("IS THIS LOGGING??? HELLOOOOOO???");
-    //   console.log("logging hasErrors item");
-    //   console.log(item);
-    //   return false; // I don't think this is actually doing anything??
-    // } else
-    console.log(errorItems[0]());
-    console.log(errorItems[1]());
 
     for (let i = 1; i < errorItems.length; i++) {
       if (
-        errorItems[i]() !== undefined ||
         errorItems[i]() !== "" ||
+        errorItems[i]() !== undefined ||
         errorItems[i]() !== false
       ) {
         //if (item() !== "" || item() !== false || item() !== undefined) {
+        console.log(i);
         console.log(errorItems[i]);
         console.log(errorItems[i]());
         // this.errors.hasErrors(false);
-        containsError = true;
-        break; // break on the first error, no need to check the rest
+        // containsError = true;
+        this.errors.hasErrors(true);
+        // break; // break on the first error, no need to check the rest
+      } else {
+        console.log((i = " has no error, value below"));
+        console.log(errorItems[i]());
       }
     }
 
-    if (containsError) {
-      this.errors.hasErrors(true);
-    } else {
-      this.errors.hasErrors(false);
-    }
-    containsError = false; // reset
-    // hasErrors must be set outside of the loop otherwise it would change if the last item was true/false
     console.log("are there errors?");
     console.log(this.errors.hasErrors());
     console.log("end of checkForErrors");
@@ -507,6 +495,11 @@ function SignUpViewModel() {
 ko.applyBindings(new SignUpViewModel());
 
 // todo:
-// resetInputs doesn't reset select elements
-// - pretty sure this has to do with using value: $data...
-//
+// - hide form upon successful submission
+// - show sucess message instead
+// - error check for provState when CAN/US selected -- doesn't seem to be working !!
+// - it runs if you initially select CAN/US
+// - when provState selected, then submitted with other errors, resetInput resets the value but not the actual option in dropdown that you see visually
+// - what's going on with resetInputs function??
+// - submitting the form shouldn't clear current options, esp. if user has to go fix errors than resubmit
+// so we shouldn't be running resetInpus --> we're not?? it only runs upon successful submission

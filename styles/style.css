@@ -263,19 +263,33 @@ button:focus {
 .disclaimer a {
   color: inherit;
 }
-.form-section {
+.form-section,
+.success-message {
   background: #ffffff;
   margin: 30px 0;
   padding: 20px;
   border: 1px solid #bbbbbb;
 }
-.form-section h2 {
+.form-section h2,
+.success-message h2 {
   font-size: 2.2rem;
   margin-top: 0;
 }
-.form-section p:first-of-type {
+.form-section p:first-of-type,
+.success-message p:first-of-type {
   margin-top: 0;
   width: 100%;
+}
+.success-message p {
+  margin: 0;
+}
+.success-message .icon-checkmark {
+  -webkit-transform: translateY(2px);
+          transform: translateY(2px);
+  margin-right: 5px;
+}
+.success-message .icon-checkmark path {
+  fill: green;
 }
 .login-section p:first-of-type {
   text-align: right;
@@ -386,6 +400,15 @@ select[id="preferred-lang"] {
   grid-column: 2;
   cursor: pointer;
 }
+.tooltip .icon-question {
+  width: 35px;
+  height: 35px;
+  -webkit-transform: translateY(5px);
+          transform: translateY(5px);
+}
+.tooltip .icon-question path {
+  fill: #757575;
+}
 .tooltip__content {
   background: #d6e1eb;
   border: 1px solid #6d92b5;
@@ -395,9 +418,15 @@ select[id="preferred-lang"] {
   grid-row: 3;
   grid-column: 1 / span 2;
   position: absolute;
+  z-index: 10;
 }
-.tooltip__content .fa-stack {
-  font-size: 1rem;
+.tooltip__content .icon-info {
+  -webkit-transform: translateY(3px);
+          transform: translateY(3px);
+  margin-right: 3px;
+}
+.tooltip__content .icon-info path {
+  fill: #6d92b5;
 }
 /* TERMS AGREEMENT CHECKBOX */
 .terms-section {
@@ -451,5 +480,14 @@ select[id="preferred-lang"] {
   color: #a1010c;
   background: #f2dede;
   border: 1px solid #a1010c;
-  padding: 5px;
+  padding: 10px;
+}
+.error-message .icon-warning {
+  width: 13px;
+  height: 13px;
+  -webkit-transform: translateY(2px);
+          transform: translateY(2px);
+}
+.error-message .icon-warning path {
+  fill: #a1010c;
 }
