@@ -19,7 +19,7 @@
         earn points when you fly.
       </p>
 
-      <div class="success-message">
+      <div class="success-message" data-bind="visible: submitted">
         <p>
           <svg
             class="icon-checkmark"
@@ -35,13 +35,16 @@
               d="M13.5 2l-7.5 7.5-3.5-3.5-2.5 2.5 6 6 10-10z"
             ></path>
           </svg>
-          Your information has been submitted.
+          Your information has been submitted. Open the console to see the data
+          object.
         </p>
       </div>
 
-      <form data-bind="submit: submitForm" novalidate>
+      <form data-bind="submit: submitForm, hidden: submitted" novalidate>
         <div class="form-section login-section">
-          <p>All fields are required unless otherwise noted.</p>
+          <p class="required-message">
+            All fields are required unless otherwise noted.
+          </p>
           <h2>Login information</h2>
           <p>
             Password must be at least 8 characters, no more than 16 characters
@@ -49,49 +52,50 @@
             digit.
           </p>
 
-          <div class="login-controls">
-            <div class="form-control form-control-thirds">
-              <label for="email">Email address</label>
-              <input
-                type="email"
-                id="email"
-                data-bind="value: email, css: {'input-error': errors.email}, event: {change: handleInputChange}"
-              />
-              <div
-                class="error-message"
-                data-bind="html: errors.email, visible: errors.email"
-              ></div>
-            </div>
+          <div class="form-control form-control-thirds">
+            <label for="email">Email address</label>
+            <input
+              type="email"
+              id="email"
+              data-bind="value: email, css: {'input-error': errors.email}, event: {change: handleInputChange}"
+            />
+            <div
+              class="error-message"
+              data-bind="html: errors.email, visible: errors.email"
+            ></div>
+          </div>
 
-            <div class="form-control form-control-thirds">
-              <label for="password1">Password</label>
-              <input
-                type="password"
-                id="password1"
-                data-bind="value: password1, css: {'input-error': errors.password1}, event: {change: handleInputChange}"
-              />
-              <div
-                class="error-message"
-                data-bind="html: errors.password1, visible: errors.password1"
-              ></div>
-            </div>
+          <div class="form-control form-control-thirds">
+            <label for="password1">Password</label>
+            <input
+              type="password"
+              id="password1"
+              data-bind="value: password1, css: {'input-error': errors.password1}, event: {change: handleInputChange}"
+            />
+            <div
+              class="error-message"
+              data-bind="html: errors.password1, visible: errors.password1"
+            ></div>
+          </div>
 
-            <div class="form-control form-control-thirds">
-              <label for="password2">Re-enter password</label>
-              <input
-                type="password"
-                id="password2"
-                data-bind="value: password2, css: {'input-error': $root.errors.password2}, event: {change: handleInputChange}"
-              />
-              <div
-                class="error-message"
-                data-bind="html: $root.errors.password2, visible: $root.errors.password2"
-              ></div>
-            </div>
+          <div class="form-control form-control-thirds">
+            <label for="password2">Re-enter password</label>
+            <input
+              type="password"
+              id="password2"
+              data-bind="value: password2, css: {'input-error': $root.errors.password2}, event: {change: handleInputChange}"
+            />
+            <div
+              class="error-message"
+              data-bind="html: $root.errors.password2, visible: $root.errors.password2"
+            ></div>
           </div>
         </div>
 
         <div class="form-section personal-section">
+          <p class="required-message">
+            All fields are required unless otherwise noted.
+          </p>
           <h2>Personal information</h2>
           <p>
             Passenger's name, gender and date of birth must match their

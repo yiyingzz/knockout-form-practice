@@ -123,7 +123,7 @@ function SignUpViewModel() {
   this.terms = ko.observable(false);
 
   // editable data (user list)
-  this.users = ko.observableArray([]);
+  // this.users = ko.observableArray([]);
 
   // ERROR OBJECT
   this.errors = {
@@ -148,6 +148,9 @@ function SignUpViewModel() {
     preferredLang: ko.observable(""),
     terms: ko.observable("")
   };
+
+  // SUCESSFUL SUBMISSION
+  this.submitted = ko.observable(false);
 
   // METHODS
   this.showErrorMessage = function (id, message = "This field is required.") {
@@ -233,7 +236,6 @@ function SignUpViewModel() {
     console.log("are there errors?");
     console.log(this.errors.hasErrors());
 
-    // check for no errors - how?
     if (!this.errors.hasErrors()) {
       this.addNewUser();
     } else {
@@ -318,13 +320,14 @@ function SignUpViewModel() {
       contactInfo,
       login
     );
-    this.users.push(newUser);
+    // this.users.push(newUser);
 
     // display submitted data in console:
     console.log("New user registered!!👍");
     console.log(newUser);
-    console.log("\n Full list of users:");
-    console.log(this.users());
+
+    // console.log("\n Full list of users:");
+    // console.log(this.users());
 
     this.resetInputs();
   };
@@ -367,6 +370,7 @@ function SignUpViewModel() {
     this.terms(false);
 
     console.log(this.preferredLang());
+    this.submitted(true);
     console.log("resetInputs finished!");
   };
 
@@ -378,9 +382,7 @@ function SignUpViewModel() {
       if (this.provStateOptions().length > 0) {
         this.provStateOptions.splice(0); // removes previous options in dropdown
       }
-      this.provStateData[country.toLowerCase()].forEach((item) => {
-        this.provStateOptions.push(item);
-      });
+      this.provStateOptions([...this.provStateData[country.toLowerCase()]]);
     }
     this.country(country);
   };
@@ -443,21 +445,16 @@ function SignUpViewModel() {
     const errorItems = Object.values(this.errors);
 
     for (let i = 1; i < errorItems.length; i++) {
-      if (
-        errorItems[i]() !== "" ||
-        errorItems[i]() !== undefined ||
-        errorItems[i]() !== false
-      ) {
-        //if (item() !== "" || item() !== false || item() !== undefined) {
-        console.log(i);
-        console.log(errorItems[i]);
-        console.log(errorItems[i]());
-        // this.errors.hasErrors(false);
+      if (errorItems[i]() !== "") {
+        // console.log(i);
+        // console.log(errorItems[i]);
+        // console.log(errorItems[i]());
+        // // this.errors.hasErrors(false);
         // containsError = true;
         this.errors.hasErrors(true);
-        // break; // break on the first error, no need to check the rest
+        break; // break on the first error, no need to check the rest
       } else {
-        console.log((i = " has no error, value below"));
+        console.log(i + " has no error, value below");
         console.log(errorItems[i]());
       }
     }
@@ -493,13 +490,3 @@ function SignUpViewModel() {
 
 // activate knockout
 ko.applyBindings(new SignUpViewModel());
-
-// todo:
-// - hide form upon successful submission
-// - show sucess message instead
-// - error check for provState when CAN/US selected -- doesn't seem to be working !!
-// - it runs if you initially select CAN/US
-// - when provState selected, then submitted with other errors, resetInput resets the value but not the actual option in dropdown that you see visually
-// - what's going on with resetInputs function??
-// - submitting the form shouldn't clear current options, esp. if user has to go fix errors than resubmit
-// so we shouldn't be running resetInpus --> we're not?? it only runs upon successful submission

@@ -4,6 +4,17 @@
   margin: 30px 0;
   padding: 20px;
   border: 1px solid @medium-grey;
+}
+
+.form-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  h2,
+  h2 + p {
+    width: 100%;
+  }
 
   h2 {
     font-size: @large-text;
@@ -31,13 +42,8 @@
   }
 }
 
-.login-section p:first-of-type {
+.required-message {
   text-align: right;
-}
-
-.login-controls {
-  display: flex;
-  justify-content: space-between;
 }
 
 label,
@@ -71,22 +77,24 @@ select {
 // form input sizes
 .form-control-half {
   width: calc(50% - 15px);
+
+  @media @phone {
+    width: 100%;
+  }
 }
 
 .form-control-thirds {
   width: calc(100% / 3 - 20px);
+
+  @media @phone {
+    width: 100%;
+  }
 }
 
 .form-control-quarter {
-  width: calc(25% - 20px);
-}
+  width: calc(25% - 22px);
 
-.personal-section {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-
-  h2 {
+  @media @phone {
     width: 100%;
   }
 }
@@ -97,6 +105,10 @@ select {
   padding: 0;
   margin: 0;
   width: calc((100% / 3) * 2 - 10px);
+
+  @media @phone {
+    width: 100%;
+  }
 
   legend {
     width: 100%;
@@ -120,12 +132,15 @@ select {
 
 /* PREFERRED LANGUAGE */
 .form-control__lang {
-  width: auto;
   width: calc(100% / 3 + 15px);
   display: grid;
   grid-template-rows: auto auto auto;
   grid-template-columns: auto 35px;
   position: relative;
+
+  @media @phone {
+    width: 100%;
+  }
 
   label {
     padding-top: 0;
@@ -153,8 +168,8 @@ select[id="preferred-lang"] {
   cursor: pointer;
 
   .icon-question {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     transform: translateY(5px);
 
     path {
@@ -238,7 +253,7 @@ select[id="preferred-lang"] {
   color: @dark-red;
   background: @pale-red;
   border: 1px solid @dark-red;
-  padding: 10px;
+  padding: 5px;
 
   .icon-warning {
     width: 13px;
