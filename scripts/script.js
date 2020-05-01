@@ -122,9 +122,6 @@ function SignUpViewModel() {
   // terms agreement
   this.terms = ko.observable(false);
 
-  // editable data (user list)
-  // this.users = ko.observableArray([]);
-
   // ERROR OBJECT
   this.errors = {
     hasErrors: ko.observable(false),
@@ -161,7 +158,6 @@ function SignUpViewModel() {
       <path fill="#000000" d="M8 11c-0.552 0-1-0.448-1-1v-3c0-0.552 0.448-1 1-1s1 0.448 1 1v3c0 0.552-0.448 1-1 1z"></path>
     </svg> 
     `;
-    // this.errors[id](`<i class="fas fa-exclamation-triangle"></i> ${message}`);
     this.errors[id](warningIcon + message);
   };
 
@@ -199,8 +195,6 @@ function SignUpViewModel() {
     inputs.forEach((item) => {
       // converting css class names into camelCase for their JS counterparts
       let id = this.getInputId(item.id);
-      console.log(id);
-      console.log(this[id]());
       // check if the input is empty or false
       if (
         this[id]() === "" ||
@@ -226,23 +220,10 @@ function SignUpViewModel() {
     }
 
     if (this.country() === "Canada" || this.country() === "USA") {
-      console.log("checked for Canada or US");
-      console.log("country value: " + this.country());
       this.checkProvState();
     }
 
     this.checkForErrors();
-
-    console.log("are there errors?");
-    console.log(this.errors.hasErrors());
-
-    if (!this.errors.hasErrors()) {
-      this.addNewUser();
-    } else {
-      console.log("scrollToError running");
-      this.scrollToError();
-      console.log("scrollToError done");
-    }
   };
   // end of checkInputs function
 
@@ -265,19 +246,13 @@ function SignUpViewModel() {
   };
 
   this.checkProvState = () => {
-    console.log("checkProvState started");
     if (this.provState() === "" || this.provState() === undefined) {
       this.showErrorMessage("provState");
     }
-    console.log("country value: " + this.country());
-    console.log("provState value: " + this.provState());
-    console.log("checkProvState ran");
   };
 
-  // add new user to system once "Join now" button is pressed
+  // add new user to system
   this.addNewUser = () => {
-    // set user info (probably should have just made a user object with all these to begin with)
-    console.log(this.firstName());
     const name = {
       firstName: this.firstName(),
       middleName: this.middleName(),
@@ -320,22 +295,17 @@ function SignUpViewModel() {
       contactInfo,
       login
     );
-    // this.users.push(newUser);
 
     // display submitted data in console:
     console.log("New user registered!!👍");
     console.log(newUser);
-
-    // console.log("\n Full list of users:");
-    // console.log(this.users());
+    this.submitted(true); // show success message
 
     this.resetInputs();
   };
 
   // clear form once data has been submitted successfully
   this.resetInputs = () => {
-    console.log("resetInputs ran!");
-    console.log(this.preferredLang());
     // login
     this.email("");
     this.password1("");
@@ -368,10 +338,6 @@ function SignUpViewModel() {
 
     // terms
     this.terms(false);
-
-    console.log(this.preferredLang());
-    this.submitted(true);
-    console.log("resetInputs finished!");
   };
 
   this.setUserCountry = function (country) {
@@ -391,7 +357,6 @@ function SignUpViewModel() {
   this.handleSelectChange = (val, e) => {
     const id = this.getInputId(e.target.id);
     const value = e.target.value;
-    console.log(value);
 
     if (value !== undefined) {
       if (id === "country") {
@@ -406,11 +371,10 @@ function SignUpViewModel() {
       this.showErrorMessage("dob");
     } else {
       // if there isn't a value
-      console.log(id);
       this.showErrorMessage(id);
     }
 
-    // need to clear error for general dob inputs (dunno if this needs to be a separate function???)
+    // need to clear error for general dob inputs
     if (id.match(/(dob)/g)) {
       if (
         this.errors.dobYear() === "" &&
@@ -423,7 +387,7 @@ function SignUpViewModel() {
   };
 
   this.handleInputChange = (param, e) => {
-    console.log(param); // what is this? comes out undefined, when used after a select, it's the select value!!!
+    // console.log(param); // what is this? comes out undefined, when used after a select, it's the select value!!!
     const id = this.getInputId(e.target.id);
     if (this[id] !== "") {
       this.errors[id]("");
@@ -438,30 +402,23 @@ function SignUpViewModel() {
   };
 
   // after each submission - loop through this.errors to find if errors exist
-  // if everything is false, set this.errors.hasError to false, if one thing is true, set this.errors.hasError to true
+  // if everything is empty, set this.errors.hasError to false, if one thing is true, set this.errors.hasError to true
   this.checkForErrors = () => {
-    console.log("starting checkForErrors");
     // Object.values lets us get the value of the key-value pairs on the errors object
     const errorItems = Object.values(this.errors);
 
     for (let i = 1; i < errorItems.length; i++) {
       if (errorItems[i]() !== "") {
-        // console.log(i);
-        // console.log(errorItems[i]);
-        // console.log(errorItems[i]());
-        // // this.errors.hasErrors(false);
-        // containsError = true;
         this.errors.hasErrors(true);
         break; // break on the first error, no need to check the rest
-      } else {
-        console.log(i + " has no error, value below");
-        console.log(errorItems[i]());
       }
     }
 
-    console.log("are there errors?");
-    console.log(this.errors.hasErrors());
-    console.log("end of checkForErrors");
+    if (!this.errors.hasErrors()) {
+      this.addNewUser();
+    } else {
+      this.scrollToError();
+    }
   };
 
   this.scrollToError = () => {
