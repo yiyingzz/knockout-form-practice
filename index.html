@@ -357,19 +357,14 @@
             Agreement of Terms and Conditions
           </h2>
           <div class="form-control form-control__terms">
-            <div
-              class="terms__container"
-              data-bind="css: {'terms-checked': terms}"
-            >
+            <label for="terms" data-bind="css: {'terms-checked': terms}">
               <input
                 type="checkbox"
                 id="terms"
                 data-bind="checked: terms, css: {'input-error': errors.terms}, event: {change: handleInputChange}"
               />
-              <label for="terms"
-                >I agree to the terms and conditions of VIPorter program</label
-              >
-            </div>
+              I agree to the terms and conditions of VIPorter program</label
+            >
             <div
               class="error-message"
               data-bind="html: errors.terms, visible: errors.terms"
