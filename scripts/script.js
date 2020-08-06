@@ -9,7 +9,7 @@ function User(name, gender, dob, address, contactInfo, login) {
   self.login = login;
 }
 
-// viewmodel - so this is the page essentially
+// viewmodel - this is the js/data that goes with the page
 function SignUpViewModel() {
   // options for the select dropdowns
   this.genderOptions = ["Female", "Male", "X"];
@@ -387,7 +387,8 @@ function SignUpViewModel() {
   };
 
   this.handleInputChange = (param, e) => {
-    // console.log(param); // what is this? comes out undefined, when used after a select, it's the select value!!!
+    // console.log(param); // this is the input value, initially undefined as no input exists, after typing something in it will be the input value
+    // generally knockout event functions seem to use $data as the first param, event as the 2nd --> in this case, b/c it's a select input, the data is the value???
     const id = this.getInputId(e.target.id);
     if (this[id] !== "") {
       this.errors[id]("");
@@ -445,5 +446,5 @@ function SignUpViewModel() {
   };
 }
 
-// activate knockout
+// activate knockout - bind all this to the page (I guess it keeps it contained?)
 ko.applyBindings(new SignUpViewModel());
